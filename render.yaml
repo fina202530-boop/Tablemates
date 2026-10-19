@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: tablemates-japan
+    runtime: python
+    plan: starter
+    buildCommand: python -m py_compile server.py
+    startCommand: python server.py --host 0.0.0.0 --port $PORT
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.11
+      - key: TABLEMATES_DATA_DIR
+        value: /var/data
+      - key: TABLEMATES_SECURE_COOKIES
+        value: "1"
+    disk:
+      name: tablemates-data
+      mountPath: /var/data
+      sizeGB: 1
