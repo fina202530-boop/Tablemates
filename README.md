@@ -27,6 +27,10 @@ This is a small demo using Python's built-in HTTP server and SQLite. Before usin
 
 The host section lists the details applicants should include and the team contact address, `hello@tablemates.jp`. Applications are sent directly by email; there is no on-page application submission.
 
+## Event comments
+
+Visitors can read comments for each event, and the comment form becomes available after that event's listed date in Japan time. Comments are stored in SQLite and persist with the local database or Render persistent disk. Reviews are public and are not verified against bookings. When editing the event cards in `index.html`, keep the event names and dates in sync with `EVENT_DATES` in `server.py`.
+
 To see who has registered and when each member last logged in, open a second terminal in this folder and run:
 
 ```powershell

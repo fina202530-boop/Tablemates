@@ -1,9 +1,11 @@
 import http.cookiejar
 import json
+import re
 import sqlite3
 import tempfile
 import threading
 import unittest
+from datetime import date
 from pathlib import Path
 from urllib.error import HTTPError
 from urllib.request import HTTPCookieProcessor, Request, build_opener
@@ -123,6 +125,35 @@ class AccountServerTests(unittest.TestCase):
         self.assertEqual(status, 201)
         self.assertIn("Secure", headers["Set-Cookie"])
 
+    def test_event_date_catalog_matches_the_website_cards(self):
+        page = (server.ROOT / "index.html").read_text(encoding="utf-8")
+        website_events = {
+            name: date.fromisoformat(event_date)
+            for event_date, name in re.findall(
+                r'<article class="event-card" data-category="[^"]+" data-date="([^"]+)" data-event="([^"]+)"',
+                page,
+            )
+        }
+        self.assertEqual(website_events, server.EVENT_DATES)
+
+    def test_every_event_has_menu_or_activity_details(self):
+        page = (server.ROOT / "index.html").read_text(encoding="utf-8")
+        event_count = len(re.findall(r'<article class="event-card"', page))
+        details_button_count = len(re.findall(r'data-event-menu|data-tea-menu', page))
+        self.assertEqual(details_button_count, event_count)
+
+    def test_website_assets_are_served(self):
+        for path, content_type in (
+            ("/styles.css", "text/css; charset=utf-8"),
+            ("/app.js", "text/javascript; charset=utf-8"),
+        ):
+            with self.subTest(path=path):
+                with self.client.open(self.base_url + path, timeout=5) as response:
+                    self.assertEqual(response.status, 200)
+                    self.assertEqual(response.headers.get_content_type(), content_type.split(";")[0])
+                    self.assertEqual(response.headers.get_content_charset(), "utf-8")
+                    self.assertTrue(response.read())
+
     def test_rejects_cross_origin_account_requests(self):
         request = Request(
             self.base_url + "/api/register",
@@ -135,6 +166,71 @@ class AccountServerTests(unittest.TestCase):
         with self.assertRaises(HTTPError) as raised:
             self.client.open(request, timeout=5)
         self.assertEqual(raised.exception.code, 403)
+
+    def test_event_comments_persist_and_are_listed_for_the_event(self):
+        with patch.object(server, "japan_today", return_value=date(2026, 10, 25)):
+            status, _, response = self.request_json(
+                "/api/comments",
+                {
+                    "event": "Osaka after dark: a local food walk",
+                    "name": "Jamie",
+                    "rating": 5,
+                    "comment": "A lovely evening with great food.",
+                },
+                method="POST",
+            )
+        self.assertEqual(status, 201)
+        self.assertEqual(response["comment"]["name"], "Jamie")
+        self.assertEqual(response["comment"]["rating"], 5)
+
+        status, _, comments = self.request_json(
+            "/api/comments?event=Osaka%20after%20dark%3A%20a%20local%20food%20walk"
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(comments["count"], 1)
+        self.assertEqual(comments["comments"][0]["comment"], "A lovely evening with great food.")
+
+        _, _, unrelated = self.request_json(
+            "/api/comments?event=Around%20the%20world%2C%20one%20dinner%20table"
+        )
+        self.assertEqual(unrelated["count"], 0)
+
+    def test_rejects_comments_before_event_date_and_invalid_events(self):
+        payload = {
+            "event": "Kyoto tea ceremony and seasonal sweets",
+            "name": "Jamie",
+            "rating": 5,
+            "comment": "Looking forward to it.",
+        }
+        with patch.object(server, "japan_today", return_value=date(2026, 11, 5)):
+            status, _, response = self.request_json("/api/comments", payload, method="POST")
+        self.assertEqual(status, 400)
+        self.assertIn("after the event date", response["error"])
+
+        payload["event"] = "An event that does not exist"
+        with patch.object(server, "japan_today", return_value=date(2026, 11, 5)):
+            status, _, response = self.request_json("/api/comments", payload, method="POST")
+        self.assertEqual(status, 400)
+        self.assertIn("valid event", response["error"])
+
+    def test_rejects_invalid_comment_ratings_and_lengths(self):
+        payload = {
+            "event": "Osaka after dark: a local food walk",
+            "name": "Jamie",
+            "rating": 6,
+            "comment": "Not a valid rating.",
+        }
+        with patch.object(server, "japan_today", return_value=date(2026, 10, 25)):
+            status, _, response = self.request_json("/api/comments", payload, method="POST")
+        self.assertEqual(status, 400)
+        self.assertIn("rating", response["error"])
+
+        payload["rating"] = 5
+        payload["comment"] = " " * 501
+        with patch.object(server, "japan_today", return_value=date(2026, 10, 25)):
+            status, _, response = self.request_json("/api/comments", payload, method="POST")
+        self.assertEqual(status, 400)
+        self.assertIn("500 characters", response["error"])
 
 if __name__ == "__main__":
     unittest.main()

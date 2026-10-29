@@ -8,11 +8,12 @@ import re
 import secrets
 import sqlite3
 import uuid
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from http.cookies import SimpleCookie
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from urllib.parse import unquote, urlsplit
+from urllib.parse import parse_qs, unquote, urlsplit
+from zoneinfo import ZoneInfo
 
 
 ROOT = Path(__file__).resolve().parent
@@ -24,6 +25,19 @@ PASSWORD_ITERATIONS = 310_000
 MAX_REQUEST_BYTES = 16_384
 EMAIL_PATTERN = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 DUMMY_SALT = bytes.fromhex("2f2b136e968912e056abb34156fa89fc")
+EVENT_DATES = {
+    "Osaka after dark: a local food walk": date(2026, 10, 24),
+    "Around the world, one dinner table": date(2026, 10, 30),
+    "Make your own little piece of Japan": date(2026, 10, 31),
+    "Sweet Japan, from mochi to matcha": date(2026, 11, 1),
+    "Kyoto market morning with Yuki": date(2026, 11, 4),
+    "Tokyo old-town bites with Kenji": date(2026, 10, 28),
+    "Nara street food and mochi walk": date(2026, 11, 8),
+    "Tea passport: five countries, one table": date(2026, 10, 27),
+    "Kyoto tea ceremony and seasonal sweets": date(2026, 11, 6),
+    "Home flavors: a South Asian dinner": date(2026, 11, 2),
+    "Sunday brunch: new in Tokyo": date(2026, 11, 8),
+}
 
 
 def utc_now():
@@ -66,6 +80,16 @@ def initialize_database():
             );
             CREATE INDEX IF NOT EXISTS sessions_expiry_idx
                 ON sessions(expires_at);
+            CREATE TABLE IF NOT EXISTS event_comments (
+                id TEXT PRIMARY KEY,
+                event_name TEXT NOT NULL,
+                name TEXT NOT NULL,
+                rating INTEGER NOT NULL CHECK (rating BETWEEN 1 AND 5),
+                comment TEXT NOT NULL,
+                created_at TEXT NOT NULL
+            );
+            CREATE INDEX IF NOT EXISTS event_comments_event_idx
+                ON event_comments(event_name, created_at DESC);
             """
         )
 
@@ -82,6 +106,10 @@ def hash_password(password, salt):
 
 def hash_session_token(token):
     return hashlib.sha256(token.encode("ascii")).digest()
+
+
+def japan_today():
+    return datetime.now(ZoneInfo("Asia/Tokyo")).date()
 
 
 def user_response(row):
@@ -202,19 +230,53 @@ class TableMatesHandler(BaseHTTPRequestHandler):
         return [("Set-Cookie", cookie)]
 
     def do_GET(self):
-        path = unquote(urlsplit(self.path).path)
+        parsed_url = urlsplit(self.path)
+        path = unquote(parsed_url.path)
         if path == "/api/me":
             user = self.get_current_user()
             self.send_json(200, {"user": user_response(user) if user else None})
             return
-        if path not in ("/", "/index.html", "/image.jpg"):
+        if path == "/api/comments":
+            events = parse_qs(parsed_url.query, keep_blank_values=True).get("event", [])
+            if len(events) != 1 or events[0] not in EVENT_DATES:
+                self.send_json(400, {"error": "Choose a valid event."})
+                return
+            try:
+                with connect_database() as connection:
+                    count = connection.execute(
+                        "SELECT COUNT(*) FROM event_comments WHERE event_name = ?",
+                        (events[0],),
+                    ).fetchone()[0]
+                    comments = connection.execute(
+                        """
+                        SELECT name, rating, comment, created_at
+                        FROM event_comments
+                        WHERE event_name = ?
+                        ORDER BY created_at DESC, id DESC
+                        LIMIT 100
+                        """,
+                        (events[0],),
+                    ).fetchall()
+                self.send_json(200, {"count": count, "comments": [dict(comment) for comment in comments]})
+            except sqlite3.Error:
+                self.log_error("Event comment database request failed.")
+                self.send_json(500, {"error": "Event comments are temporarily unavailable."})
+            return
+        static_files = {
+            "/": ("index.html", "text/html; charset=utf-8"),
+            "/index.html": ("index.html", "text/html; charset=utf-8"),
+            "/image.jpg": ("image.jpg", "image/jpeg"),
+            "/styles.css": ("styles.css", "text/css; charset=utf-8"),
+            "/app.js": ("app.js", "text/javascript; charset=utf-8"),
+        }
+        if path not in static_files:
             self.send_error(404)
             return
-        target = (ROOT / ("index.html" if path == "/" else path.lstrip("/"))).resolve()
+        filename, content_type = static_files[path]
+        target = (ROOT / filename).resolve()
         if target.parent != ROOT or not target.is_file():
             self.send_error(404)
             return
-        content_type = "image/jpeg" if target.suffix.lower() == ".jpg" else "text/html; charset=utf-8"
         body = target.read_bytes()
         self.send_response(200)
         self.send_header("Content-Type", content_type)
@@ -238,6 +300,8 @@ class TableMatesHandler(BaseHTTPRequestHandler):
                 self.login()
             elif path == "/api/logout":
                 self.logout()
+            elif path == "/api/comments":
+                self.submit_comment()
             else:
                 self.discard_request_body()
                 self.send_json(404, {"error": "This account endpoint does not exist."})
@@ -246,6 +310,46 @@ class TableMatesHandler(BaseHTTPRequestHandler):
         except sqlite3.Error:
             self.log_error("Account database request failed.")
             self.send_json(500, {"error": "The local account database is unavailable. Check the server console."})
+
+    def submit_comment(self):
+        payload = self.read_json()
+        event_name = payload.get("event")
+        name = payload.get("name")
+        rating = payload.get("rating")
+        comment = payload.get("comment")
+        if not all(isinstance(value, str) for value in (event_name, name, comment)):
+            raise ValueError("Complete the name, event, and comment fields.")
+        name = name.strip()
+        comment = comment.strip()
+        event_date = EVENT_DATES.get(event_name)
+        if event_date is None:
+            raise ValueError("Choose a valid event.")
+        if event_date >= japan_today():
+            raise ValueError("You can share a story after the event date.")
+        if not name or len(name) > 80 or any(ord(character) < 32 or ord(character) == 127 for character in name):
+            raise ValueError("Enter a name between 1 and 80 characters.")
+        if isinstance(rating, bool) or not isinstance(rating, int) or not 1 <= rating <= 5:
+            raise ValueError("Choose a rating from 1 to 5 stars.")
+        if not comment or len(comment) > 500:
+            raise ValueError("Write a comment between 1 and 500 characters.")
+
+        created_at = utc_now()
+        with connect_database() as connection:
+            connection.execute(
+                """
+                INSERT INTO event_comments (id, event_name, name, rating, comment, created_at)
+                VALUES (?, ?, ?, ?, ?, ?)
+                """,
+                (str(uuid.uuid4()), event_name, name, rating, comment, created_at),
+            )
+        self.send_json(201, {
+            "comment": {
+                "name": name,
+                "rating": rating,
+                "comment": comment,
+                "created_at": created_at,
+            }
+        })
 
     def register(self):
         payload = self.read_json()
