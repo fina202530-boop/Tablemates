@@ -4,23 +4,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f8f7f3">
-  <meta name="description" content="Find your people over food, tea, and unforgettable local experiences in Japan.">
-  <title>TableMates Japan — Meet over food, make friends</title>
+  <meta name="description" content="Discover international food and culture in Japan. Meet local hosts, share stories, and reserve your seat before you travel.">
+  <title>TableMates — A world of food, one shared table</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body data-current-page="home">
-  <div class="announcement"><span>New to Japan?</span> Come as a stranger. Leave with a story (and a few new friends).</div>
+  <div class="announcement"><span>One table, many homes.</span> Discover the world through food in Japan.</div>
   <header>
     <nav class="nav" aria-label="Main navigation">
-      <a class="brand" href="#home" aria-label="TableMates Japan home"><span class="brand-mark"><span>T</span></span>TableMates</a>
+      <a class="brand" href="#home" aria-label="TableMates home"><span class="brand-mark"><span>T</span></span>TableMates</a>
       <div class="nav-links" id="navLinks">
-        <a class="active" href="#home" data-i18n="navHome" aria-current="page">Home</a>
         <a href="#experiences" data-i18n="navExperiences">Experiences</a>
+        <a href="#community">Community</a>
         <a href="#about" data-i18n="navAbout">Our story</a>
-        <a href="#host" data-i18n="navHost">Become a host</a>
       </div>
       <div class="nav-actions">
         <select class="language-select" id="languageSelect" aria-label="Choose language">
@@ -38,15 +37,16 @@
   </header>
 
   <main>
+    <div class="checkout-notice" id="checkoutNotice" role="status" hidden></div>
     <section class="hero" id="home" data-page-view="home">
       <div class="hero-copy">
-        <div class="eyebrow" data-i18n="heroEyebrow">Good food. Good people. One world.</div>
+        <div class="eyebrow" data-i18n="heroEyebrow">A taste of the world, in Japan</div>
         <p class="member-welcome" id="memberWelcome" hidden aria-live="polite"></p>
-        <h1 data-i18n="heroTitle">One table. A world of friends. <em>Flavors from every culture.</em></h1>
-        <p data-i18n="heroText">Share food and traditions from around the world. Meet new friends, exchange stories, and feel at home together.</p>
+        <h1 data-i18n="heroTitle">Come hungry.<br>Leave with a little <em>piece of home.</em></h1>
+        <p data-i18n="heroText">Japan is the meeting place; the flavors come from everywhere. Join a local host, share the stories behind each dish, and book your seat before you travel.</p>
         <div class="hero-actions">
-          <a class="button" href="#experiences" data-i18n="exploreButton">Explore experiences</a>
-          <a class="text-link" href="#about"><span>↗</span><span data-i18n="howItWorks">How it works</span></a>
+          <a class="button" href="#experiences" data-i18n="exploreButton">Find your table</a>
+          <a class="text-link" href="#about"><span>↗</span><span data-i18n="howItWorks">Our way of gathering</span></a>
         </div>
         <div class="hero-proof">
           <div class="avatar-stack" aria-hidden="true">
@@ -54,31 +54,49 @@
             <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=75" alt="">
             <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=80&q=75" alt="">
           </div>
-          <span><b>1,200+</b> new connections made over a shared table</span>
+          <span>For curious eaters, solo travelers, and future neighbors</span>
         </div>
       </div>
       <div class="hero-visual">
         <div class="hero-image">
-          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1100&q=85" alt="Friends sharing dinner together at a warmly lit restaurant">
-          <div class="image-label"><b>Tonight in Osaka</b>Small tables, open hearts</div>
+          <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1100&q=85" alt="Friends from different backgrounds sharing dishes around a dinner table">
+          <div class="image-label"><b>One table, many homes</b>Every dish has a story</div>
         </div>
-        <div class="floating-note"><div class="note-icon">♡</div><strong>Your people are here.</strong><small>Come meet them over dinner.</small></div>
-        <div class="hero-stamp"><span><b>一期一会</b><br>A once-in-a-lifetime<br>meeting</span></div>
+        <div class="floating-note"><div class="note-icon">♡</div><strong>Come as you are.</strong><small>Leave knowing someone new.</small></div>
+        <div class="hero-stamp"><span><b>いただきます</b><br>Let’s share<br>something good</span></div>
+      </div>
+    </section>
+
+    <section class="section welcome-section" data-page-view="home">
+      <div class="section-inner">
+        <div class="welcome-heading">
+          <div class="eyebrow">A little planning, a lot of connection</div>
+          <h2>Make room for a real connection on your trip.</h2>
+          <p>Meet the people behind the flavors. Every TableMates gathering is an invitation to taste, listen, and share a little of where we come from.</p>
+        </div>
+        <div class="welcome-grid">
+          <article class="welcome-card"><span>01</span><h3>Choose a table</h3><p>Browse food walks, home-style dinners, tea tastings, and cultural gatherings across Japan.</p></article>
+          <article class="welcome-card"><span>02</span><h3>Save your seat</h3><p>Pick an upcoming date and complete secure checkout before you leave home.</p></article>
+          <article class="welcome-card"><span>03</span><h3>Share the moment</h3><p>Arrive curious, meet your host and fellow guests, and bring your own story to the table.</p></article>
+        </div>
+        <a class="text-link welcome-link" href="#experiences">Explore upcoming tables <span>→</span></a>
       </div>
     </section>
 
     <section class="section events-section" id="experiences" data-page-view="experiences" hidden>
       <div class="section-inner">
         <div class="section-heading">
-          <div><div class="eyebrow">What would you like to do?</div><h2 data-i18n="eventsTitle">Upcoming events</h2></div>
-          <p data-i18n="eventsIntro">Local hosts, thoughtful little groups, and a seat saved just for you. All across Japan.</p>
+          <div><div class="eyebrow">Your next story starts here</div><h2 data-i18n="eventsTitle">Find your table</h2></div>
+          <p data-i18n="eventsIntro">From neighborhood food walks to dishes from around the world, meet local hosts and fellow travelers across Japan.</p>
         </div>
+        <p class="schedule-note" id="bookingAvailability" role="status">Sample 2027 dates and prices are shown while the first season is being planned. Secure checkout will open once the schedule and Stripe account are configured.</p>
         <div class="filters" role="group" aria-label="Filter experiences">
           <button class="filter active" data-filter="all">All experiences</button>
           <button class="filter" data-filter="Food tour">Food tours</button>
           <button class="filter" data-filter="Tea & sweets">Tea & sweets</button>
           <button class="filter" data-filter="Food meetup">Food meetups</button>
           <button class="filter" data-filter="Culture">Culture</button>
+          <button class="filter" data-filter="Pop-up event">Pop-up events</button>
         </div>
         <div class="event-controls">
           <div class="date-filter">
@@ -89,13 +107,13 @@
           <p class="results-count" id="resultsCount" aria-live="polite"></p>
         </div>
         <div class="event-grid" id="eventGrid">
-          <article class="event-card" data-category="Food tour" data-date="2026-10-24" data-event="Osaka after dark: a local food walk">
+          <article class="event-card" data-category="Food tour" data-date="2027-10-24" data-event="Osaka after dark: a local food walk">
             <div class="event-photo">
               <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=80" alt="Japanese street food grilled fresh for an evening food walk" loading="lazy">
               <span class="category-tag">Food tour</span><button class="save-button" aria-label="Save Osaka after dark to favorites">♡</button>
             </div>
             <div class="event-content">
-              <div class="event-meta"><span>OSAKA</span><span>Sat, Oct 24 · 6:00 PM</span></div>
+              <div class="event-meta"><span>OSAKA</span><span>Sun, Oct 24, 2027 · 6:00 PM</span></div>
               <h3>Osaka after dark: a local food walk</h3>
               <p>Follow your local guide through lantern-lit lanes, tiny izakaya, and the tastes locals keep to themselves.</p>
               <button class="event-menu-trigger" type="button" data-event-menu>See the food menu →</button>
@@ -103,13 +121,13 @@
               <a class="card-reviews" href="#" data-comments><span class="star">★</span> <span data-review-count>0</span> stories <span>· Read & share</span></a>
             </div>
           </article>
-          <article class="event-card" data-category="Food meetup" data-date="2026-10-30" data-event="Around the world, one dinner table">
+          <article class="event-card" data-category="Food meetup" data-date="2027-10-30" data-event="Around the world, one dinner table">
             <div class="event-photo">
               <img src="https://images.unsplash.com/photo-1581954548122-4dff8989c0f7?auto=format&fit=crop&w=900&q=85" alt="Friends from different backgrounds sharing dinner around one table" loading="lazy">
               <span class="category-tag">Food meetup</span><button class="save-button" aria-label="Save Around the world to favorites">♡</button>
             </div>
             <div class="event-content">
-              <div class="event-meta"><span>TOKYO</span><span>Fri, Oct 30 · 7:00 PM</span></div>
+              <div class="event-meta"><span>TOKYO</span><span>Sat, Oct 30, 2027 · 7:00 PM</span></div>
               <h3>Around the world, one dinner table</h3>
               <p>Bring a dish, share a story, and meet neighbors from everywhere at our international potluck.</p>
               <button class="event-menu-trigger" type="button" data-event-menu>See the shared menu →</button>
@@ -117,13 +135,13 @@
               <a class="card-reviews" href="#" data-comments><span class="star">★</span> <span data-review-count>0</span> stories <span>· Read & share</span></a>
             </div>
           </article>
-          <article class="event-card" data-category="Culture" data-date="2026-10-31" data-event="Make your own little piece of Japan">
+          <article class="event-card" data-category="Culture" data-date="2027-10-31" data-event="Make your own little piece of Japan">
             <div class="event-photo">
               <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=900&q=80" alt="Artisan craft workshop materials laid out on a table" loading="lazy">
               <span class="category-tag">Culture</span><button class="save-button" aria-label="Save Make your own piece of Japan to favorites">♡</button>
             </div>
             <div class="event-content">
-              <div class="event-meta"><span>KYOTO</span><span>Sat, Oct 31 · 11:00 AM</span></div>
+              <div class="event-meta"><span>KYOTO</span><span>Sun, Oct 31, 2027 · 11:00 AM</span></div>
               <h3>Make your own little piece of Japan</h3>
               <p>Try a relaxed hands-on craft session with a local maker, then take home something you made.</p>
               <button class="event-menu-trigger" type="button" data-event-menu>See the activity plan →</button>
@@ -131,13 +149,13 @@
               <a class="card-reviews" href="#" data-comments><span class="star">★</span> <span data-review-count>0</span> stories <span>· Read & share</span></a>
             </div>
           </article>
-          <article class="event-card" data-category="Tea & sweets" data-date="2026-11-01" data-event="Sweet Japan, from mochi to matcha">
+          <article class="event-card" data-category="Tea & sweets" data-date="2027-11-01" data-event="Sweet Japan, from mochi to matcha">
             <div class="event-photo">
               <img src="https://images.unsplash.com/photo-1706350091276-ba994c35cd99?auto=format&fit=crop&w=900&q=85" alt="Japanese mochi and green tea served together on a ceramic plate" loading="lazy">
               <span class="category-tag">Tea & sweets</span><button class="save-button" aria-label="Save Sweet Japan to favorites">♡</button>
             </div>
             <div class="event-content">
-              <div class="event-meta"><span>TOKYO</span><span>Sun, Nov 1 · 3:30 PM</span></div>
+              <div class="event-meta"><span>TOKYO</span><span>Mon, Nov 1, 2027 · 3:30 PM</span></div>
               <h3>Sweet Japan, from mochi to matcha</h3>
               <p>A sweet little tasting tour of wagashi and treats from around the world, paired with a pot of tea.</p>
               <button class="event-menu-trigger" type="button" data-event-menu>See the tasting menu →</button>
@@ -145,13 +163,13 @@
               <a class="card-reviews" href="#" data-comments><span class="star">★</span> <span data-review-count>0</span> stories <span>· Read & share</span></a>
             </div>
           </article>
-          <article class="event-card" data-category="Food tour" data-date="2026-11-04" data-event="Kyoto market morning with Yuki">
+          <article class="event-card" data-category="Food tour" data-date="2027-11-04" data-event="Kyoto market morning with Yuki">
             <div class="event-photo">
               <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80" alt="Fresh local food prepared with seasonal ingredients" loading="lazy">
               <span class="category-tag">Food tour</span><button class="save-button" aria-label="Save Kyoto market morning to favorites">♡</button>
             </div>
             <div class="event-content">
-              <div class="event-meta"><span>KYOTO</span><span>Wed, Nov 4 · 9:30 AM</span></div>
+              <div class="event-meta"><span>KYOTO</span><span>Thu, Nov 4, 2027 · 9:30 AM</span></div>
               <h3>Kyoto market morning with Yuki</h3>
               <p>Meet the makers, taste the season, and wander Nishiki Market with a friendly local foodie.</p>
               <button class="event-menu-trigger" type="button" data-event-menu>See market tastings →</button>
@@ -159,13 +177,13 @@
               <a class="card-reviews" href="#" data-comments><span class="star">★</span> <span data-review-count>0</span> stories <span>· Read & share</span></a>
             </div>
           </article>
-          <article class="event-card" data-category="Food tour" data-date="2026-10-28" data-event="Tokyo old-town bites with Kenji">
+          <article class="event-card" data-category="Food tour" data-date="2027-10-28" data-event="Tokyo old-town bites with Kenji">
             <div class="event-photo">
               <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=900&q=80" alt="Fresh Japanese sushi served at a local restaurant" loading="lazy">
               <span class="category-tag">Food tour</span><button class="save-button" aria-label="Save Tokyo old-town bites to favorites">♡</button>
             </div>
             <div class="event-content">
-              <div class="event-meta"><span>TOKYO · ASAKUSA</span><span>Wed, Oct 28 · 11:00 AM</span></div>
+              <div class="event-meta"><span>TOKYO · ASAKUSA</span><span>Thu, Oct 28, 2027 · 11:00 AM</span></div>
               <h3>Tokyo old-town bites with Kenji</h3>
               <p>Wander Asakusa with a local guide, tasting handmade snacks and neighborhood favorites along the way.</p>
               <button class="event-menu-trigger" type="button" data-event-menu>See the food route →</button>
@@ -173,13 +191,13 @@
               <a class="card-reviews" href="#" data-comments><span class="star">★</span> <span data-review-count>0</span> stories <span>· Read & share</span></a>
             </div>
           </article>
-          <article class="event-card" data-category="Food tour" data-date="2026-11-08" data-event="Nara street food and mochi walk">
+          <article class="event-card" data-category="Food tour" data-date="2027-11-08" data-event="Nara street food and mochi walk">
             <div class="event-photo">
               <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=80" alt="Fresh bites from a local Japanese street food stall" loading="lazy">
               <span class="category-tag">Food tour</span><button class="save-button" aria-label="Save Nara street food walk to favorites">♡</button>
             </div>
             <div class="event-content">
-              <div class="event-meta"><span>NARA</span><span>Sun, Nov 8 · 1:00 PM</span></div>
+              <div class="event-meta"><span>NARA</span><span>Mon, Nov 8, 2027 · 1:00 PM</span></div>
               <h3>Nara street food and mochi walk</h3>
               <p>Try freshly pounded mochi, local sweets, and favorite street snacks on a friendly town-center walk.</p>
               <button class="event-menu-trigger" type="button" data-event-menu>See the food menu →</button>
@@ -187,7 +205,7 @@
               <a class="card-reviews" href="#" data-comments><span class="star">★</span> <span data-review-count>0</span> stories <span>· Read & share</span></a>
             </div>
           </article>
-          <article class="event-card" data-category="Tea & sweets" data-date="2026-10-27" data-event="Tea passport: five countries, one table">
+          <article class="event-card" data-category="Tea & sweets" data-date="2027-10-27" data-event="Tea passport: five countries, one table">
             <div class="event-photo">
               <div class="tea-flight" role="img" aria-label="A colorful tea flight: Japanese matcha, Indian chai and Sri Lankan Ceylon tea">
                 <figure><img src="https://images.unsplash.com/photo-1746932451426-209444cd613a?auto=format&fit=crop&w=450&q=80" alt="" loading="lazy"><figcaption>Matcha whisking</figcaption></figure>
@@ -197,7 +215,7 @@
               <span class="category-tag">Tea & sweets</span><button class="save-button" aria-label="Save Tea passport to favorites">♡</button>
             </div>
             <div class="event-content">
-              <div class="event-meta"><span>OSAKA · NAMBA</span><span>Tue, Oct 27 · 3:00 PM</span></div>
+              <div class="event-meta"><span>OSAKA · NAMBA</span><span>Wed, Oct 27, 2027 · 3:00 PM</span></div>
               <h3>Tea passport: five countries, one table</h3>
               <p>Sample matcha, hojicha, Assam, Nepali tea, and Sri Lankan Ceylon with little sweets from each place.</p>
               <button class="event-menu-trigger" type="button" data-event-menu>See the tea tasting menu →</button>
@@ -205,13 +223,13 @@
               <a class="card-reviews" href="#" data-comments><span class="star">★</span> <span data-review-count>0</span> stories <span>· Read & share</span></a>
             </div>
           </article>
-          <article class="event-card" data-category="Tea & sweets" data-date="2026-11-06" data-event="Kyoto tea ceremony and seasonal sweets">
+          <article class="event-card" data-category="Tea & sweets" data-date="2027-11-06" data-event="Kyoto tea ceremony and seasonal sweets">
             <div class="event-photo">
               <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=900&q=80" alt="Tea set prepared for a peaceful tea ceremony" loading="lazy">
               <span class="category-tag">Tea & sweets</span><button class="save-button" aria-label="Save Kyoto tea ceremony to favorites">♡</button>
             </div>
             <div class="event-content">
-              <div class="event-meta"><span>KYOTO · GION</span><span>Fri, Nov 6 · 1:30 PM</span></div>
+              <div class="event-meta"><span>KYOTO · GION</span><span>Sat, Nov 6, 2027 · 1:30 PM</span></div>
               <h3>Kyoto tea ceremony and seasonal sweets</h3>
               <p>Join a gentle tea ceremony, taste seasonal wagashi, and learn about the meaning behind each step.</p>
               <button class="tea-menu-trigger" type="button" data-tea-menu>Explore the international tea menu →</button>
@@ -219,13 +237,13 @@
               <a class="card-reviews" href="#" data-comments><span class="star">★</span> <span data-review-count>0</span> stories <span>· Read & share</span></a>
             </div>
           </article>
-          <article class="event-card" data-category="Food meetup" data-date="2026-11-02" data-event="Home flavors: a South Asian dinner">
+          <article class="event-card" data-category="Food meetup" data-date="2027-11-02" data-event="Home flavors: a South Asian dinner">
             <div class="event-photo">
               <img src="https://images.unsplash.com/photo-1547573854-74d2a71d0826?auto=format&fit=crop&w=900&q=85" alt="A South Asian shared dinner spread arranged on a table" loading="lazy">
               <span class="category-tag">Food meetup</span><button class="save-button" aria-label="Save Home flavors dinner to favorites">♡</button>
             </div>
             <div class="event-content">
-              <div class="event-meta"><span>OSAKA · UMEDA</span><span>Mon, Nov 2 · 6:30 PM</span></div>
+              <div class="event-meta"><span>OSAKA · UMEDA</span><span>Tue, Nov 2, 2027 · 6:30 PM</span></div>
               <h3>Home flavors: a South Asian dinner</h3>
               <p>Share Bangladeshi, Nepali, and Sri Lankan home cooking and meet new friends over a relaxed dinner.</p>
               <button class="event-menu-trigger" type="button" data-event-menu>See the dinner menu →</button>
@@ -233,17 +251,32 @@
               <a class="card-reviews" href="#" data-comments><span class="star">★</span> <span data-review-count>0</span> stories <span>· Read & share</span></a>
             </div>
           </article>
-          <article class="event-card" data-category="Food meetup" data-date="2026-11-08" data-event="Sunday brunch: new in Tokyo">
+          <article class="event-card" data-category="Food meetup" data-date="2027-11-08" data-event="Sunday brunch: new in Tokyo">
             <div class="event-photo">
               <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=900&q=80" alt="A friendly group gathering for brunch" loading="lazy">
               <span class="category-tag">Food meetup</span><button class="save-button" aria-label="Save Sunday brunch to favorites">♡</button>
             </div>
             <div class="event-content">
-              <div class="event-meta"><span>TOKYO · SHIBUYA</span><span>Sun, Nov 8 · 10:30 AM</span></div>
+              <div class="event-meta"><span>TOKYO · SHIBUYA</span><span>Mon, Nov 8, 2027 · 10:30 AM</span></div>
               <h3>Sunday brunch: new in Tokyo</h3>
               <p>A low-pressure brunch for international students and newcomers. Come solo and leave with local tips.</p>
               <button class="event-menu-trigger" type="button" data-event-menu>See the brunch menu →</button>
               <div class="event-footer"><span class="event-price"><b>¥2,500</b> / person</span><button class="book-button">Book a seat</button></div>
+              <a class="card-reviews" href="#" data-comments><span class="star">★</span> <span data-review-count>0</span> stories <span>· Read & share</span></a>
+            </div>
+          </article>
+          <article class="event-card" data-category="Pop-up event" data-date="2027-01-01" data-event="International New Year food gathering">
+            <div class="event-photo">
+              <img src="https://images.unsplash.com/photo-1552912470-ee2e96439539?auto=format&fit=crop&w=900&q=85" alt="A vendor preparing food at a busy international street-food stall" loading="lazy">
+              <span class="category-tag">Pop-up event</span><button class="save-button" aria-label="Save International New Year food gathering to favorites">♡</button>
+            </div>
+            <div class="event-content">
+              <div class="event-meta"><span>NIIGATA</span><span>Fri, Jan 1, 2027 · Time to be announced</span></div>
+              <h3>International New Year food gathering</h3>
+              <p>Celebrate New Year's Day in Niigata with food stalls featuring flavors from around the world. Reserve your place with a ticket; food and drinks are purchased separately from each stall.</p>
+              <button class="event-menu-trigger" type="button" data-event-menu>Event details →</button>
+              <div class="event-footer"><span class="event-price"><b>¥2,000</b> / person</span><button class="book-button">Book a seat</button></div>
+              <p class="event-payment-note">Food and drinks are paid to each stall directly. Cash, cards, and PayPay; options may vary by vendor.</p>
               <a class="card-reviews" href="#" data-comments><span class="star">★</span> <span data-review-count>0</span> stories <span>· Read & share</span></a>
             </div>
           </article>
@@ -252,41 +285,57 @@
       </div>
     </section>
 
-    <section class="section about-section" id="about" data-page-view="about" hidden>
-      <div class="section-inner about-grid">
-        <div class="about-image"><img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1100&q=85" alt="A diverse group of friends sitting together outdoors" loading="lazy"></div>
-        <div class="about-copy">
-          <div class="eyebrow">A little story about why we began</div>
-          <h2>We know what it feels like to start over.</h2>
-          <p>We started TableMates because we understand how lonely Japan can feel when the language is unfamiliar and home is far away. Even simple things can feel harder when you don't yet know the words or the people around you.</p>
-          <p>We believe friendship can begin around a shared meal, a cup of tea, or a new experience. Our gatherings bring people from Japan and around the world together to enjoy good food, share stories, and make friends—so little by little, a faraway place can start to feel like home.</p>
-          <div class="about-points">
-            <div class="about-point">Small, friendly groups</div>
-            <div class="about-point">Welcoming local hosts</div>
-            <div class="about-point">Experiences in English</div>
-            <div class="about-point">A community across Japan</div>
+    <section class="community-section section" id="community" data-page-view="community" hidden>
+      <div class="section-inner">
+        <div class="community-intro">
+          <div class="eyebrow">The table keeps growing</div>
+          <h2>Little moments from around our tables.</h2>
+          <p>Food tastes even better with a story. Share a photo or short video from a TableMates gathering, and get inspired by the community.</p>
+        </div>
+        <div class="community-layout">
+          <div class="community-feed-wrap">
+            <div class="community-feed-heading"><h3>From the community</h3><span>Shared by TableMates</span></div>
+            <div class="community-feed" id="communityFeed" aria-live="polite">
+              <p class="community-empty">Loading community stories…</p>
+            </div>
           </div>
-          <a href="#experiences" class="text-link">Find your first meetup <span>→</span></a>
+          <aside class="share-card">
+            <div class="share-card-photo">
+              <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=85" alt="A colorful table of fresh food ready to share" loading="lazy">
+            </div>
+            <div class="share-card-body">
+              <div class="eyebrow">Your turn</div>
+              <h3>Bring a memory to the table.</h3>
+              <p>Sign in to share one photo or video. Posts appear publicly as soon as they are uploaded.</p>
+              <form id="mediaForm" enctype="multipart/form-data">
+                <div class="form-field"><label for="mediaFile">Photo or video</label><input id="mediaFile" name="media" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm" required></div>
+                <div class="form-field"><label for="mediaCaption">Your story</label><textarea id="mediaCaption" name="caption" maxlength="280" required placeholder="What are we sharing? (280 characters max)"></textarea></div>
+                <button class="button modal-submit" id="mediaSubmit" type="submit">Share with the community</button>
+                <div class="form-message" id="mediaMessage" role="status" aria-live="polite"></div>
+              </form>
+              <p class="media-guidelines">JPEG, PNG, or WebP up to 5 MB; MP4 or WebM up to 20 MB. Share only media you have permission to post. Need something removed? <a href="mailto:hello@tablemates.jp?subject=Community%20post%20removal">Contact us.</a></p>
+              <p class="auth-note" id="communityAuthNote">You can browse without an account. Log in to share.</p>
+            </div>
+          </aside>
         </div>
       </div>
     </section>
 
-    <section class="host-section" id="host" data-page-view="host" hidden>
-      <div class="host-inner">
-        <div class="host-copy">
-          <div class="eyebrow">Share what you love</div>
-          <h2>Your city. Your culture. Your table.</h2>
-          <p>Have a favorite food lane, a tea ceremony you love, or a story to share? We welcome host applications from people with thoughtful experience ideas in Japan.</p>
-        </div>
-        <div class="host-requirements">
-          <h3>What to include in your application</h3>
-          <ul>
-            <li>Your name and contact email</li>
-            <li>Your city in Japan</li>
-            <li>The experience you would like to host</li>
-            <li>A short description of your idea and why you would like to host</li>
-          </ul>
-          <p>Email your application to <a href="mailto:hello@tablemates.jp">hello@tablemates.jp</a>. Our team reviews applications before anyone can host a public event.</p>
+    <section class="section about-section" id="about" data-page-view="about" hidden>
+      <div class="section-inner about-grid">
+        <div class="about-image"><img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1100&q=85" alt="A diverse group of friends making time for each other" loading="lazy"></div>
+        <div class="about-copy">
+          <div class="eyebrow">Food is a language we can share</div>
+          <h2>Many cultures. One open table.</h2>
+          <p>TableMates is for anyone who wants to feel closer to the world around them—whether Japan is home, a new beginning, or the next stop on a journey.</p>
+          <p>Our gatherings bring local hosts and guests together through international food and culture. Taste a dish from someone's home, trade stories over tea, and discover how much we have in common—one table at a time.</p>
+          <div class="about-points">
+            <div class="about-point">Food traditions from everywhere</div>
+            <div class="about-point">Small, welcoming gatherings</div>
+            <div class="about-point">Meet local hosts and travelers</div>
+            <div class="about-point">Plan and book before you arrive</div>
+          </div>
+          <a href="#experiences" class="text-link">Find your first table <span>→</span></a>
         </div>
       </div>
     </section>
@@ -294,13 +343,13 @@
     <section class="section testimonials-section" data-page-view="about" hidden>
       <div class="section-inner">
         <div class="section-heading">
-          <div><div class="eyebrow">Little notes from the table</div><h2>Good company travels.</h2></div>
-          <p>The itinerary is lovely. The people you meet along the way? Even better.</p>
+          <div><div class="eyebrow">More than a meal</div><h2>Come for the flavors. Stay for the stories.</h2></div>
+          <p>Every gathering is a chance to share a tradition, try something new, and meet someone you might never have met otherwise.</p>
         </div>
-        <div class="quote-grid">
-          <article class="quote"><div class="quote-stars">★★★★★</div><blockquote>“I arrived in Osaka knowing nobody. By the end of dinner, I had plans for the weekend.”</blockquote><div class="quote-person"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=75" alt=""><span><b>Maya</b> · Student from Nepal</span></div></article>
-          <article class="quote"><div class="quote-stars">★★★★★</div><blockquote>“The tea was beautiful, but meeting people from so many places made my afternoon.”</blockquote><div class="quote-person"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=75" alt=""><span><b>Arif</b> · Visiting from Bangladesh</span></div></article>
-          <article class="quote"><div class="quote-stars">★★★★★</div><blockquote>“Our host showed us the Osaka I hoped to find. I even made a friend to practice Japanese with.”</blockquote><div class="quote-person"><img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=100&q=75" alt=""><span><b>Amaya</b> · New in Kyoto</span></div></article>
+        <div class="values-grid">
+          <article class="value-card"><span>01</span><h3>Pass the plate</h3><p>Food is an easy way to say “welcome.” Every dish makes space for another person's story.</p></article>
+          <article class="value-card"><span>02</span><h3>Stay curious</h3><p>Learn a new recipe, ritual, or perspective from the people who know it best.</p></article>
+          <article class="value-card"><span>03</span><h3>Leave connected</h3><p>Take home more than a photo: a new friend, a favorite flavor, and a reason to return.</p></article>
         </div>
       </div>
     </section>
@@ -309,14 +358,14 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-top">
-        <div><a class="brand" href="#home" aria-label="TableMates Japan home"><span class="brand-mark"><span>T</span></span>TableMates</a><p class="footer-blurb">A friendly seat at the table, where sharing food becomes the start of friendship in Japan.</p></div>
+        <div><a class="brand" href="#home" aria-label="TableMates home"><span class="brand-mark"><span>T</span></span>TableMates</a><p class="footer-blurb">A friendly seat at the table, where sharing food becomes the start of friendship in Japan.</p></div>
         <div class="footer-links">
           <div class="footer-column"><h4>Explore</h4><a href="#experiences">All experiences</a><a href="#services">What we do</a><a href="#about">Our story</a></div>
-          <div class="footer-column"><h4>Community</h4><a href="#host">Become a host</a><a href="#experiences">Guest stories</a><a href="mailto:hello@tablemates.jp">Get in touch</a></div>
+          <div class="footer-column"><h4>Community</h4><a href="#community">Photos & stories</a><a href="mailto:hello@tablemates.jp">Get in touch</a></div>
           <div class="footer-column"><h4>Good to know</h4><a href="#about">How it works</a><a href="#about">Safety & support</a><a href="#about">FAQ</a></div>
         </div>
       </div>
-      <div class="footer-bottom"><span>© 2026 TableMates Japan. Made with care in Japan.</span><span>English · 日本語 · বাংলা · नेपाली · සිංහල · Français</span></div>
+      <div class="footer-bottom"><span>© 2026 TableMates. Made with care in Japan.</span><span>English · 日本語 · বাংলা · नेपाली · සිංහල · Français</span></div>
     </div>
   </footer>
 
@@ -402,22 +451,18 @@
   </dialog>
 
   <dialog id="bookingDialog" aria-labelledby="bookingTitle">
-    <div class="modal-head"><div><h2 id="bookingTitle">Save your seat</h2><p>Good plans, no awkward surprises. Payment is handled securely.</p></div><button class="close-modal" aria-label="Close">×</button></div>
-    <form class="modal-body" id="bookingForm">
+    <div class="modal-head"><div><h2 id="bookingTitle">Reserve your place</h2><p>Pay securely with Stripe. Your booking is confirmed after payment.</p></div><button class="close-modal" aria-label="Close">×</button></div>
+    <form class="modal-body" id="bookingForm" novalidate>
       <div class="event-details" id="bookingDetails"></div>
       <div class="form-grid">
         <div class="form-field"><label for="guestName">Your name</label><input id="guestName" name="name" autocomplete="name" required placeholder="e.g. Alex Kim"></div>
         <div class="form-field"><label for="guestEmail">Email address</label><input id="guestEmail" type="email" name="email" autocomplete="email" required placeholder="you@example.com"></div>
         <div class="form-field"><label for="guestCount">Number of guests</label><select id="guestCount" name="guests"><option>1 guest</option><option>2 guests</option><option>3 guests</option><option>4 guests</option></select></div>
         <div class="form-field"><label for="guestLanguage">Preferred language</label><select id="guestLanguage" name="language"><option>English</option><option>日本語</option><option>বাংলা</option><option>नेपाली</option><option>සිංහල</option><option>Français</option></select></div>
-        <div class="form-field full"><label>Payment method</label><div class="payment-options">
-          <label class="payment-option"><input type="radio" name="payment" value="Visa / Mastercard" required> Visa / Mastercard</label>
-          <label class="payment-option"><input type="radio" name="payment" value="Credit card"> Other credit card</label>
-          <label class="payment-option"><input type="radio" name="payment" value="Konbini"> Konbini payment</label>
-        </div></div>
+        <p class="form-field full payment-note">Checkout opens on Stripe. Your card details are handled by Stripe and are never stored on this website.</p>
       </div>
-      <button class="button modal-submit" type="submit">Continue to secure checkout</button>
-      <div class="form-message" role="status"></div>
+      <button class="button modal-submit" type="submit">Continue to secure payment</button>
+      <div class="form-message" role="status" aria-live="polite"></div>
     </form>
   </dialog>
 
@@ -431,8 +476,8 @@
       <div class="form-grid">
         <div class="form-field full" id="registerNameField" hidden><label for="registerName">Your name</label><input id="registerName" name="name" autocomplete="name" placeholder="e.g. Alex Kim"></div>
         <div class="form-field full"><label for="loginEmail">Email address</label><input id="loginEmail" type="email" required autocomplete="email" placeholder="you@example.com"></div>
-        <div class="form-field full"><label for="loginPassword">Password</label><input id="loginPassword" type="password" required autocomplete="current-password" placeholder="Your password" minlength="8"></div>
-        <div class="form-field full" id="confirmPasswordField" hidden><label for="confirmPassword">Confirm password</label><input id="confirmPassword" type="password" autocomplete="new-password" placeholder="Enter your password again"></div>
+        <div class="form-field full"><label for="loginPassword">Password</label><div class="password-input"><input id="loginPassword" type="password" required autocomplete="current-password" placeholder="Your password" minlength="8"><button class="password-toggle" type="button" aria-label="Show password" aria-controls="loginPassword" aria-pressed="false" data-password-toggle><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle><path class="password-eye-slash" d="m3 3 18 18"></path></svg></button></div></div>
+        <div class="form-field full" id="confirmPasswordField" hidden><label for="confirmPassword">Confirm password</label><div class="password-input"><input id="confirmPassword" type="password" autocomplete="new-password" placeholder="Enter your password again"><button class="password-toggle" type="button" aria-label="Show password" aria-controls="confirmPassword" aria-pressed="false" data-password-toggle><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle><path class="password-eye-slash" d="m3 3 18 18"></path></svg></button></div></div>
       </div>
       <button class="button modal-submit" id="authSubmit" type="submit">Log in</button>
       <div class="form-message" role="status" aria-live="polite"></div>

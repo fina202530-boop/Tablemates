@@ -1,5 +1,5 @@
 const translationRows = [
-      ["TableMates Japan — Meet over food, make friends", "TableMates Japan — 食卓を囲んで、友だちになろう", "TableMates Japan — খাবারের আড্ডায় বন্ধুত্ব", "TableMates Japan — खानासँगै भेटौँ, साथी बनौँ", "TableMates Japan — ආහාර සමඟ හමුවී මිතුරන් වෙමු", "TableMates Japan — Se retrouver autour d’un repas"],
+      ["TableMates — A world of food, one shared table", "TableMates — 世界の味を、ひとつの食卓で", "TableMates — খাবারের টেবিলে সারা বিশ্ব", "TableMates — एउटै टेबलमा संसारभरका स्वाद", "TableMates — එකම මේසයක ලොව රස", "TableMates — Le monde des saveurs à une même table"],
       ["New to Japan?", "日本に来たばかりですか？", "জাপানে নতুন?", "जापानमा नयाँ हुनुहुन्छ?", "ජපානයට අලුතින්ද?", "Nouveau au Japon ?"],
       ["Come as a stranger. Leave with a story (and a few new friends).", "初めてでも大丈夫。思い出と新しい友だちを連れて帰ろう。", "অচেনা মানুষ হয়ে আসুন, গল্প আর নতুন বন্ধু নিয়ে ফিরুন।", "अपरिचित भएर आउनुहोस्, कथा र नयाँ साथी लिएर फर्कनुहोस्।", "ආගන්තුකයෙකු ලෙස එන්න. කතාවක් සහ නව මිතුරන් සමඟ යන්න.", "Venez sans connaître personne. Repartez avec une histoire et de nouveaux amis."],
       ["Main navigation", "メインナビゲーション", "প্রধান নেভিগেশন", "मुख्य नेभिगेसन", "ප්‍රධාන සංචාලනය", "Navigation principale"],
@@ -7,7 +7,6 @@ const translationRows = [
       ["Home", "ホーム", "হোম", "गृहपृष्ठ", "මුල් පිටුව", "Accueil"],
       ["Experiences", "体験", "অভিজ্ঞতা", "अनुभवहरू", "අත්දැකීම්", "Expériences"],
       ["Our story", "私たちのストーリー", "আমাদের গল্প", "हाम्रो कथा", "අපේ කතාව", "Notre histoire"],
-      ["Become a host", "ホストになる", "হোস্ট হন", "होस्ट बन्नुहोस्", "සත්කාරකයෙකු වන්න", "Devenir hôte"],
       ["Choose language", "言語を選択", "ভাষা নির্বাচন করুন", "भाषा छान्नुहोस्", "භාෂාව තෝරන්න", "Choisir la langue"],
       ["Log in", "ログイン", "লগ ইন", "लग इन", "පිවිසෙන්න", "Connexion"],
       ["Open navigation", "ナビゲーションを開く", "নেভিগেশন খুলুন", "नेभिगेसन खोल्नुहोस्", "සංචාලනය විවෘත කරන්න", "Ouvrir la navigation"],
@@ -46,12 +45,15 @@ const translationRows = [
       ["Tea & sweets", "お茶とお菓子", "চা ও মিষ্টি", "चिया र मिठाई", "තේ සහ රසකැවිලි", "Thé et douceurs"],
       ["Food meetups", "食事交流会", "খাবারের আড্ডা", "खाना भेटघाट", "ආහාර හමුවීම්", "Rencontres gourmandes"],
       ["Culture", "文化", "সংস্কৃতি", "संस्कृति", "සංස්කෘතිය", "Culture"],
+      ["Pop-up events", "期間限定イベント", "পপ-আপ অনুষ্ঠান", "पप-अप कार्यक्रमहरू", "පොප්-අප් උත්සව", "Événements éphémères"],
       ["Find events on a date", "日付からイベントを探す", "তারিখ অনুযায়ী অনুষ্ঠান খুঁজুন", "मितिअनुसार कार्यक्रम खोज्नुहोस्", "දිනය අනුව උත්සව සොයන්න", "Trouver des événements par date"],
       ["Show events available on this date", "この日に開催されるイベントを表示", "এই তারিখের অনুষ্ঠান দেখান", "यो मितिका कार्यक्रम देखाउनुहोस्", "මෙම දිනයේ ඇති උත්සව පෙන්වන්න", "Afficher les événements à cette date"],
       ["Clear date", "日付をクリア", "তারিখ মুছুন", "मिति हटाउनुहोस्", "දිනය මකන්න", "Effacer la date"],
       ["Food tour", "食べ歩きツアー", "খাবারের ট্যুর", "खाना भ्रमण", "ආහාර චාරිකාව", "Balade gourmande"],
       ["Food meetup", "食事交流会", "খাবারের আড্ডা", "खाना भेटघाट", "ආහාර හමුවීම", "Rencontre gourmande"],
+      ["Pop-up event", "期間限定イベント", "পপ-আপ অনুষ্ঠান", "पप-अप कार्यक्रम", "පොප්-අප් උත්සවය", "Événement éphémère"],
       ["Book a seat", "席を予約", "আসন বুক করুন", "सिट बुक गर्नुहोस्", "ආසනයක් වෙන්කරන්න", "Réserver une place"],
+      ["Book now", "今すぐ予約", "এখনই বুক করুন", "अहिले बुक गर्नुहोस्", "දැන් වෙන්කරන්න", "Réserver maintenant"],
       ["stories", "件のストーリー", "টি গল্প", "कथा", "කතා", "avis"],
       ["· Read & share", "· 読む・共有する", "· পড়ুন ও শেয়ার করুন", "· पढ्नुहोस् र साझा गर्नुहोस्", "· කියවන්න සහ බෙදාගන්න", "· Lire et partager"],
       ["OSAKA", "大阪", "ওসাকা", "ओसाका", "ඔසාකා", "OSAKA"],
@@ -229,6 +231,8 @@ const translationRows = [
       ["Create account", "アカウントを作成", "অ্যাকাউন্ট তৈরি করুন", "खाता खोल्नुहोस्", "ගිණුමක් සාදන්න", "Créer un compte"],
       ["Password", "パスワード", "পাসওয়ার্ড", "पासवर्ड", "මුරපදය", "Mot de passe"],
       ["Your password", "パスワードを入力", "আপনার পাসওয়ার্ড", "तपाईंको पासवर्ड", "ඔබේ මුරපදය", "Votre mot de passe"],
+      ["Show password", "パスワードを表示", "পাসওয়ার্ড দেখান", "पासवर्ड देखाउनुहोस्", "මුරපදය පෙන්වන්න", "Afficher le mot de passe"],
+      ["Hide password", "パスワードを隠す", "পাসওয়ার্ড লুকান", "पासवर्ड लुकाउनुहोस्", "මුරපදය සඟවන්න", "Masquer le mot de passe"],
       ["Confirm password", "パスワードを確認", "পাসওয়ার্ড নিশ্চিত করুন", "पासवर्ड पुष्टि गर्नुहोस्", "මුරපදය තහවුරු කරන්න", "Confirmer le mot de passe"],
       ["Enter your password again", "もう一度パスワードを入力", "আবার পাসওয়ার্ড লিখুন", "पासवर्ड फेरि लेख्नुहोस्", "නැවත මුරපදය ඇතුළත් කරන්න", "Saisissez à nouveau votre mot de passe"],
       ["Member accounts are saved in the local SQLite database. Passwords are stored as one-way hashes, never readable text.", "会員アカウントはローカルのSQLiteデータベースに保存されます。パスワードは読み取れない一方向ハッシュで保存されます。", "সদস্যদের অ্যাকাউন্ট স্থানীয় SQLite ডেটাবেসে রাখা হয়। পাসওয়ার্ড পাঠযোগ্য টেক্সট নয়, একমুখী হ্যাশ হিসেবে সংরক্ষিত হয়।", "सदस्य खाता स्थानीय SQLite डाटाबेसमा सुरक्षित हुन्छ। पासवर्ड पढ्न मिल्ने पाठमा होइन, एकतर्फी ह्यासका रूपमा राखिन्छ।", "සාමාජික ගිණුම් දේශීය SQLite දත්තගබඩාවේ සුරැකේ. මුරපද කියවිය හැකි පාඨයක් ලෙස නොව එක්-මාර්ග හැෂ් ලෙස ගබඩා වේ.", "Les comptes sont enregistrés dans la base SQLite locale. Les mots de passe sont stockés sous forme de hachages irréversibles, jamais en texte lisible."],
@@ -256,6 +260,7 @@ const translationRows = [
       ["Removed from your favorites.", "お気に入りから削除しました。", "পছন্দের তালিকা থেকে সরানো হয়েছে।", "मनपर्नेबाट हटाइयो।", "ඔබේ ප්‍රියතමයන්ගෙන් ඉවත් කළා.", "Retiré de vos favoris."],
       ["Connected to the local SQLite member database. Passwords are stored as one-way hashes, never readable text.", "ローカルSQLite会員データベースに接続しました。パスワードは読み取れない一方向ハッシュで保存されます。", "স্থানীয় SQLite সদস্য ডেটাবেসে সংযুক্ত। পাসওয়ার্ড একমুখী হ্যাশ হিসেবে রাখা হয়, পাঠযোগ্য টেক্সট হিসেবে নয়।", "स्थानीय SQLite सदस्य डाटाबेसमा जडान भयो। पासवर्ड पढ्न मिल्ने पाठमा नभई एकतर्फी ह्यासका रूपमा सुरक्षित हुन्छ।", "දේශීය SQLite සාමාජික දත්තගබඩාවට සම්බන්ධයි. මුරපද කියවිය හැකි පාඨයක් නොව එක්-මාර්ග හැෂ් ලෙස සුරැකේ.", "Connecté à la base SQLite locale. Les mots de passe sont stockés sous forme de hachages irréversibles."],
       ["Local account database is offline. Start the website with python server.py to register and log in.", "ローカル会員データベースに接続できません。登録・ログインするには python server.py でサイトを起動してください。", "স্থানীয় অ্যাকাউন্ট ডেটাবেস বন্ধ। নিবন্ধন ও লগ ইন করতে python server.py দিয়ে ওয়েবসাইট চালু করুন।", "स्थानीय खाता डाटाबेस अफलाइन छ। दर्ता र लग इन गर्न python server.py चलाउनुहोस्।", "දේශීය ගිණුම් දත්තගබඩාව නොමැත. ලියාපදිංචි වීමට සහ පිවිසීමට python server.py මඟින් අඩවිය අරඹන්න.", "Base de comptes locale hors ligne. Lancez le site avec python server.py pour vous inscrire et vous connecter."],
+      ["This page is not connected to the account server. Run python server.py, then open http://127.0.0.1:8000.", "このページはアカウントサーバーに接続されていません。python server.py を実行し、http://127.0.0.1:8000 を開いてください。", "এই পৃষ্ঠাটি অ্যাকাউন্ট সার্ভারের সঙ্গে সংযুক্ত নয়। python server.py চালান, তারপর http://127.0.0.1:8000 খুলুন।", "यो पृष्ठ खाता सर्भरमा जडान भएको छैन। python server.py चलाउनुहोस्, त्यसपछि http://127.0.0.1:8000 खोल्नुहोस्।", "මෙම පිටුව ගිණුම් සේවාදායකයට සම්බන්ධ වී නැත. python server.py ධාවනය කර http://127.0.0.1:8000 විවෘත කරන්න.", "Cette page n’est pas connectée au serveur de comptes. Lancez python server.py, puis ouvrez http://127.0.0.1:8000."],
       ["Member accounts are saved in the local SQLite database. Passwords are stored as one-way hashes, never readable text.", "会員アカウントはローカルのSQLiteデータベースに保存されます。パスワードは読み取れない一方向ハッシュで保存されます。", "সদস্যদের অ্যাকাউন্ট স্থানীয় SQLite ডেটাবেসে সংরক্ষিত হয়। পাসওয়ার্ড একমুখী হ্যাশ হিসেবে রাখা হয়, পাঠযোগ্য টেক্সট হিসেবে নয়।", "सदस्य खाताहरू स्थानीय SQLite डाटाबेसमा सुरक्षित हुन्छन्। पासवर्ड पढ्न मिल्ने पाठमा नभई एकतर्फी ह्यासका रूपमा सुरक्षित हुन्छन्।", "සාමාජික ගිණුම් දේශීය SQLite දත්තගබඩාවේ සුරැකේ. මුරපද කියවිය හැකි පාඨයක් නොව එක්-මාර්ග හැෂ් ලෙස සුරැකේ.", "Les comptes sont enregistrés dans la base SQLite locale. Les mots de passe sont stockés sous forme de hachages irréversibles."],
       ["Create your free account to save your favorite experiences.", "無料アカウントを作成して、お気に入りの体験を保存しましょう。", "পছন্দের অভিজ্ঞতা সংরক্ষণ করতে বিনামূল্যে অ্যাকাউন্ট তৈরি করুন।", "मनपर्ने अनुभव सुरक्षित गर्न निःशुल्क खाता खोल्नुहोस्।", "ඔබේ ප්‍රියතම අත්දැකීම් සුරැකීමට නොමිලේ ගිණුමක් සාදන්න.", "Créez un compte gratuit pour enregistrer vos expériences préférées."],
       ["Choose a password with at least 8 characters.", "パスワードは8文字以上にしてください。", "কমপক্ষে ৮ অক্ষরের পাসওয়ার্ড বেছে নিন।", "कम्तीमा ८ अक्षरको पासवर्ड छान्नुहोस्।", "අවම වශයෙන් අක්ෂර 8ක මුරපදයක් තෝරන්න.", "Choisissez un mot de passe d’au moins 8 caractères."],
@@ -342,8 +347,12 @@ const translationRows = [
           element.setAttribute(attribute, translations[language][source] || source);
         }
       });
+      document.querySelectorAll("[data-password-toggle]").forEach((button) => {
+        const password = document.getElementById(button.getAttribute("aria-controls"));
+        button.setAttribute("aria-label", translations[language][password.type === "password" ? "Show password" : "Hide password"]);
+      });
       document.documentElement.lang = language;
-      document.title = translations[language]["TableMates Japan — Meet over food, make friends"];
+      document.title = translations[language]["TableMates — A world of food, one shared table"];
     };
     let currentCommentsEvent = "";
     let accountServerConnected = false;
@@ -364,7 +373,7 @@ const translationRows = [
       try {
         payload = await response.json();
       } catch {
-        throw new Error("The local server returned an unreadable response.");
+        throw new Error(translate("This page is not connected to the account server. Run python server.py, then open http://127.0.0.1:8000."));
       }
       if (!response.ok) {
         const error = new Error(payload.error || "The account request could not be completed.");
@@ -385,11 +394,17 @@ const translationRows = [
       const button = document.getElementById("loginButton");
       const user = signedInUser;
       const welcome = document.getElementById("memberWelcome");
+      const communityAuthNote = document.getElementById("communityAuthNote");
       button.textContent = translate(user ? "Log out" : "Log in");
       button.title = user ? `Member ID: ${user.id}\nSigned in as ${user.name} (${user.email}). Click to log out.` : "";
       button.setAttribute("aria-label", user ? `${translate("Log out")} (${user.email})` : translate("Log in"));
       welcome.hidden = !user;
       welcome.textContent = user ? translate("Welcome, {name}! Your table is waiting.").replace("{name}", user.name) : "";
+      if (communityAuthNote) {
+        communityAuthNote.textContent = user
+          ? translate("You’re signed in as {name}. Your photo or video will be public immediately.").replace("{name}", user.name)
+          : translate("You can browse without an account. Log in to share.");
+      }
     };
     const refreshSignedInUser = async () => {
       try {
@@ -558,6 +573,36 @@ const translationRows = [
         photoSet: menuPhotoIds.food,
         items: ["Japanese egg or seasonal vegetable sandwiches", "Fresh fruit and a light salad", "A small pastry or Japanese sweet", "Coffee, tea, and juice"],
       },
+      "International New Year food gathering": {
+        intro: "Reserve your place with a ticket for this New Year's food gathering in Niigata. Browse illustrative food-stall photos from Japan, Nepal, Sri Lanka, Bangladesh, and India. Food and drinks are purchased from each vendor directly by cash, card, or PayPay; accepted methods may vary by stall. Exact vendors and dishes will depend on the stalls attending.",
+        items: [
+          {
+            name: "Nepal · Market snacks and achar",
+            photo: "https://images.unsplash.com/photo-1782876107044-d652ef2ad855?auto=format&fit=crop&w=360&q=75",
+            alt: "A Nepali market stall displaying snacks and jars of condiments",
+          },
+          {
+            name: "Sri Lanka · Tropical fruit market",
+            photo: "https://images.unsplash.com/photo-1743636521862-1aed4d6067c0?auto=format&fit=crop&w=360&q=75",
+            alt: "A Sri Lankan market stall displaying tropical fruit",
+          },
+          {
+            name: "Bangladesh · Savory street snacks",
+            photo: "https://images.unsplash.com/photo-1771699435180-1aa08bf9a246?auto=format&fit=crop&w=360&q=75",
+            alt: "A Bangladeshi street-food vendor serving savory snacks",
+          },
+          {
+            name: "India · Chaat and fried snacks",
+            photo: "https://plus.unsplash.com/premium_photo-1691030657761-cca2ec5e97e9?auto=format&fit=crop&w=360&q=75",
+            alt: "Trays of Indian street snacks displayed at a market stall",
+          },
+          {
+            name: "Japan · Grilled seafood stall",
+            photo: "https://plus.unsplash.com/premium_photo-1732753629933-66440d338da4?auto=format&fit=crop&w=360&q=75",
+            alt: "Grilled seafood displayed at a Japanese street-food stall",
+          },
+        ],
+      },
     };
     document.querySelectorAll("[data-event-menu]").forEach((button) => button.addEventListener("click", () => {
       const card = button.closest(".event-card");
@@ -572,14 +617,15 @@ const translationRows = [
       document.getElementById("eventMenuIntro").textContent = menu.intro;
       const menuList = document.getElementById("eventMenuList");
       menuList.replaceChildren(...menu.items.map((item, index) => {
+        const name = typeof item === "string" ? item : item.name;
         const listItem = document.createElement("li");
         const image = document.createElement("img");
         image.className = "menu-item-photo";
-        image.src = menuPhotoUrl(menu.photoSet, index);
-        image.alt = item;
+        image.src = typeof item === "string" ? menuPhotoUrl(menu.photoSet, index) : item.photo;
+        image.alt = typeof item === "string" ? item : item.alt;
         image.loading = "lazy";
         const itemName = document.createElement("span");
-        itemName.textContent = item;
+        itemName.textContent = name;
         listItem.append(image, itemName);
         return listItem;
       }));
@@ -634,14 +680,65 @@ const translationRows = [
       button.textContent = saved ? "♥" : "♡";
       toast(translate(saved ? "Saved to your favorites. Log in to keep it for later." : "Removed from your favorites."));
     }));
-    document.querySelectorAll(".book-button").forEach((button) => button.addEventListener("click", () => {
-      const card = button.closest(".event-card");
+    const bookingButtons = Array.from(document.querySelectorAll(".book-button"));
+    let checkoutEnabled = false;
+    let pendingBookingCard = null;
+    bookingButtons.forEach((button) => {
+      button.textContent = translate("Book now");
+    });
+    const refreshBookingAvailability = async () => {
+      try {
+        const response = await fetch("/api/checkout/status", { credentials: "same-origin" });
+        const payload = await response.json();
+        if (!response.ok) throw new Error(payload.error || "Secure checkout status is unavailable.");
+        checkoutEnabled = payload.enabled;
+        bookingButtons.forEach((button) => { button.textContent = translate("Book now"); });
+        document.getElementById("bookingAvailability").textContent = translate(payload.enabled
+          ? "Secure payment is handled by Stripe. All event times are shown in Japan time."
+          : "Sample 2027 dates and prices are shown while the first season is being planned. Secure checkout will open once the schedule and Stripe account are configured.");
+      } catch (error) {
+        console.error("Could not check secure checkout status:", error);
+        checkoutEnabled = false;
+        document.getElementById("bookingAvailability").textContent = translate("Secure checkout is temporarily unavailable. Please try again later.");
+      }
+    };
+    const showBookingDialog = (card) => {
       const details = document.getElementById("bookingDetails");
       details.textContent = `${card.querySelector("h3").textContent} · ${card.querySelector(".event-meta").innerText.replace(/\n/g, " · ")} · ${card.querySelector(".event-price b").textContent} ${translate("/ person")}`;
       const form = document.getElementById("bookingForm");
       form.reset();
-      form.querySelector(".form-message").style.display = "none";
+      form.dataset.eventName = card.querySelector("h3").textContent;
+      const message = form.querySelector(".form-message");
+      message.style.display = "none";
+      message.classList.remove("error");
       document.getElementById("bookingDialog").showModal();
+    };
+    const continuePendingBooking = () => {
+      if (!pendingBookingCard) return false;
+      const card = pendingBookingCard;
+      pendingBookingCard = null;
+      if (!checkoutEnabled) {
+        toast(translate("Secure checkout is not ready yet. Please try again later."));
+        return true;
+      }
+      showBookingDialog(card);
+      return true;
+    };
+    bookingButtons.forEach((button) => button.addEventListener("click", () => {
+      const card = button.closest(".event-card");
+      if (!signedInUser) {
+        pendingBookingCard = card;
+        const form = document.getElementById("loginForm");
+        form.reset();
+        setAuthMode("login");
+        document.getElementById("loginDialog").showModal();
+        return;
+      }
+      if (!checkoutEnabled) {
+        toast(translate("Secure checkout is not ready yet. Please try again later."));
+        return;
+      }
+      showBookingDialog(card);
     }));
     document.querySelectorAll("[data-tea-menu]").forEach((button) => button.addEventListener("click", () => {
       document.getElementById("teaMenuDialog").showModal();
@@ -650,15 +747,55 @@ const translationRows = [
       document.getElementById("teaMenuDialog").close();
       document.querySelector('[data-event="Kyoto tea ceremony and seasonal sweets"] .book-button').click();
     });
-    document.getElementById("bookingForm").addEventListener("submit", (event) => {
+    document.getElementById("bookingForm").addEventListener("submit", async (event) => {
       event.preventDefault();
       const form = event.currentTarget;
       const message = form.querySelector(".form-message");
-      message.textContent = translate("Your seat is held! This demo doesn't process real payments. A secure checkout would be connected here for card or konbini payment.");
+      if (!form.reportValidity()) {
+        message.textContent = translate("Enter your name and a valid email address to continue.");
+        message.classList.add("error");
+        message.style.display = "block";
+        return;
+      }
+      const submitButton = form.querySelector("[type='submit']");
+      const formData = new FormData(form);
+      message.classList.remove("error");
       message.style.display = "block";
+      message.textContent = translate("Opening secure Stripe checkout…");
+      submitButton.disabled = true;
+      try {
+        const payload = await accountApiRequest("/api/checkout", {
+          method: "POST",
+          body: JSON.stringify({
+            event: form.dataset.eventName,
+            name: formData.get("name"),
+            email: formData.get("email"),
+            guests: Number.parseInt(formData.get("guests"), 10),
+            language: formData.get("language")
+          })
+        });
+        const checkoutUrl = new URL(payload.checkout_url);
+        if (checkoutUrl.protocol !== "https:" || checkoutUrl.hostname !== "checkout.stripe.com") {
+          throw new Error("Stripe returned an invalid checkout destination.");
+        }
+        window.location.assign(checkoutUrl.href);
+      } catch (error) {
+        console.error("Could not start Stripe checkout:", error);
+        message.textContent = translate(error.message);
+        message.classList.add("error");
+      } finally {
+        submitButton.disabled = false;
+      }
     });
     document.getElementById("loginTab").addEventListener("click", () => setAuthMode("login"));
     document.getElementById("registerTab").addEventListener("click", () => setAuthMode("register"));
+    document.querySelectorAll("[data-password-toggle]").forEach((button) => button.addEventListener("click", () => {
+      const password = document.getElementById(button.getAttribute("aria-controls"));
+      const isVisible = password.type === "password";
+      password.type = isVisible ? "text" : "password";
+      button.setAttribute("aria-pressed", String(isVisible));
+      button.setAttribute("aria-label", translate(isVisible ? "Hide password" : "Show password"));
+    }));
     document.getElementById("loginButton").addEventListener("click", async () => {
       if (signedInUser) {
         try {
@@ -706,7 +843,9 @@ const translationRows = [
           signedInUser = payload.user;
           renderAuthButton();
           document.getElementById("loginDialog").close();
-          toast(translate("Welcome to TableMates, {name}! Your member ID is {id}.").replace("{name}", signedInUser.name).replace("{id}", signedInUser.id));
+          if (!continuePendingBooking()) {
+            toast(translate("Welcome to TableMates, {name}! Your member ID is {id}.").replace("{name}", signedInUser.name).replace("{id}", signedInUser.id));
+          }
           return;
         }
         const payload = await accountApiRequest("/api/login", {
@@ -716,7 +855,9 @@ const translationRows = [
         signedInUser = payload.user;
         renderAuthButton();
         document.getElementById("loginDialog").close();
-        toast(translate("Welcome back to TableMates, {name}!").replace("{name}", signedInUser.name));
+        if (!continuePendingBooking()) {
+          toast(translate("Welcome back to TableMates, {name}!").replace("{name}", signedInUser.name));
+        }
       } catch (error) {
         console.error("Account sign-in failed:", error);
         setAuthMessage(error.message.includes("fetch")
@@ -728,6 +869,153 @@ const translationRows = [
       }
     });
     const escapeHtml = (value) => value.replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
+    const renderCommunityPosts = (posts) => {
+      const feed = document.getElementById("communityFeed");
+      if (!posts.length) {
+        const emptyState = document.createElement("p");
+        emptyState.className = "community-empty";
+        emptyState.textContent = translate("No community stories yet. Be the first to share a table moment.");
+        feed.replaceChildren(emptyState);
+        return;
+      }
+      feed.replaceChildren(...posts.map((post) => {
+        const article = document.createElement("article");
+        article.className = "community-post";
+        const media = post.media_type.startsWith("video/")
+          ? document.createElement("video")
+          : document.createElement("img");
+        media.className = "community-post-media";
+        media.src = post.media_url;
+        if (media instanceof HTMLVideoElement) {
+          media.controls = true;
+          media.preload = "metadata";
+          media.playsInline = true;
+        } else {
+          media.alt = post.caption;
+          media.loading = "lazy";
+        }
+        const body = document.createElement("div");
+        body.className = "community-post-body";
+        const meta = document.createElement("div");
+        meta.className = "community-post-meta";
+        const author = document.createElement("strong");
+        author.textContent = post.name;
+        const timeLabel = document.createElement("time");
+        const createdAt = new Date(post.created_at);
+        timeLabel.textContent = Number.isNaN(createdAt.getTime())
+          ? ""
+          : createdAt.toLocaleDateString(languageLocales[document.getElementById("languageSelect").value]);
+        meta.append(author, timeLabel);
+        const caption = document.createElement("p");
+        caption.textContent = post.caption;
+        const report = document.createElement("a");
+        report.className = "community-report";
+        report.href = `mailto:hello@tablemates.jp?subject=${encodeURIComponent("Request to remove a community post")}&body=${encodeURIComponent(`Post ID: ${post.id}`)}`;
+        report.textContent = translate("Report or request removal");
+        body.append(meta, caption, report);
+        article.append(media, body);
+        return article;
+      }));
+    };
+    const loadCommunityPosts = async () => {
+      const feed = document.getElementById("communityFeed");
+      if (!feed) return;
+      try {
+        const response = await accountApiRequest("/api/community");
+        renderCommunityPosts(response.posts);
+      } catch (error) {
+        console.error("Could not load community posts:", error);
+        feed.textContent = translate("Community stories could not be loaded. Please try again later.");
+      }
+    };
+    const showCheckoutReturn = async () => {
+      const params = new URLSearchParams(window.location.search);
+      const checkoutNotice = document.getElementById("checkoutNotice");
+      const outcome = params.get("checkout");
+      if (outcome === "cancelled") {
+        checkoutNotice.textContent = translate("Checkout was cancelled. No payment was taken.");
+        checkoutNotice.hidden = false;
+        window.history.replaceState({}, "", `${window.location.pathname}#experiences`);
+        return;
+      }
+      if (outcome !== "success") return;
+      const sessionId = params.get("session_id");
+      checkoutNotice.textContent = translate("Checking your payment with Stripe…");
+      checkoutNotice.hidden = false;
+      window.history.replaceState({}, "", `${window.location.pathname}#home`);
+      if (!sessionId) {
+        checkoutNotice.textContent = translate("We couldn't verify the checkout session. Check your Stripe receipt before trying again.");
+        checkoutNotice.classList.add("error");
+        return;
+      }
+      try {
+        let result;
+        for (let attempt = 0; attempt < 3; attempt += 1) {
+          result = await accountApiRequest(`/api/checkout/confirm?${new URLSearchParams({ session_id: sessionId })}`);
+          if (result.status === "paid") break;
+          await new Promise((resolve) => window.setTimeout(resolve, 1200));
+        }
+        checkoutNotice.textContent = result.status === "paid"
+          ? translate("Payment confirmed for {event}. Your place is reserved for {date}.").replace("{event}", result.booking.event_name).replace("{date}", result.booking.event_date)
+          : translate("Your payment is still being confirmed. Check your Stripe receipt before trying again.");
+        checkoutNotice.classList.toggle("error", result.status !== "paid");
+      } catch (error) {
+        console.error("Could not verify the checkout return:", error);
+        checkoutNotice.textContent = translate("We couldn't verify your payment yet. Check your Stripe receipt before trying again.");
+        checkoutNotice.classList.add("error");
+      }
+    };
+    document.getElementById("mediaForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const message = document.getElementById("mediaMessage");
+      const submitButton = document.getElementById("mediaSubmit");
+      if (!signedInUser) {
+        message.textContent = translate("Log in or create an account before sharing a photo or video.");
+        message.classList.add("error");
+        message.style.display = "block";
+        setAuthMode("login");
+        document.getElementById("loginDialog").showModal();
+        return;
+      }
+      if (!form.reportValidity()) return;
+      const file = form.elements.media.files[0];
+      const allowedSizes = {
+        "image/jpeg": 5 * 1024 * 1024,
+        "image/png": 5 * 1024 * 1024,
+        "image/webp": 5 * 1024 * 1024,
+        "video/mp4": 20 * 1024 * 1024,
+        "video/webm": 20 * 1024 * 1024
+      };
+      if (!file || !allowedSizes[file.type] || file.size > allowedSizes[file.type]) {
+        message.textContent = translate("Choose a JPEG, PNG, or WebP photo up to 5 MB, or an MP4 or WebM video up to 20 MB.");
+        message.classList.add("error");
+        message.style.display = "block";
+        return;
+      }
+      message.classList.remove("error");
+      message.textContent = translate("Sharing your story…");
+      message.style.display = "block";
+      submitButton.disabled = true;
+      try {
+        const response = await fetch("/api/community", {
+          method: "POST",
+          credentials: "same-origin",
+          body: new FormData(form)
+        });
+        const payload = await response.json();
+        if (!response.ok) throw new Error(payload.error || "Your post could not be shared.");
+        form.reset();
+        message.textContent = translate("Your post is now public. Thanks for sharing!");
+        await loadCommunityPosts();
+      } catch (error) {
+        console.error("Could not share community media:", error);
+        message.textContent = translate(error.message);
+        message.classList.add("error");
+      } finally {
+        submitButton.disabled = false;
+      }
+    });
     const renderComments = (rows) => {
       const list = document.getElementById("commentsList");
       if (!rows.length) {
@@ -853,8 +1141,8 @@ const translationRows = [
       home: "home",
       experiences: "experiences",
       services: "experiences",
+      community: "community",
       about: "about",
-      host: "host",
     };
     const pageForCurrentHash = () => pageByTargetId[window.location.hash.slice(1)] || "home";
     const showPage = (page, updateHistory = true) => {
@@ -899,3 +1187,6 @@ const translationRows = [
     }));
     applyEventFilters();
     loadCommentCounts();
+    loadCommunityPosts();
+    refreshBookingAvailability();
+    showCheckoutReturn();

@@ -1,4 +1,6 @@
 import http.cookiejar
+import hashlib
+import hmac
 import json
 import re
 import sqlite3
@@ -23,11 +25,14 @@ class AccountServerTests(unittest.TestCase):
         self.database = self.data_directory / "test.sqlite3"
         self.data_patch = patch.object(server, "DATA_DIR", self.data_directory)
         self.database_patch = patch.object(server, "DATABASE", self.database)
+        self.media_patch = patch.object(server, "MEDIA_DIR", self.data_directory / "media")
         self.data_patch.start()
         self.database_patch.start()
+        self.media_patch.start()
         server.initialize_database()
 
         self.httpd = ThreadingHTTPServer(("127.0.0.1", 0), server.TableMatesHandler)
+        self.httpd.daemon_threads = False
         self.thread = threading.Thread(target=self.httpd.serve_forever, daemon=True)
         self.thread.start()
         self.base_url = f"http://127.0.0.1:{self.httpd.server_port}"
@@ -40,6 +45,7 @@ class AccountServerTests(unittest.TestCase):
         self.thread.join(timeout=5)
         self.database_patch.stop()
         self.data_patch.stop()
+        self.media_patch.stop()
         self.temporary_directory.cleanup()
 
     def request_json(self, path, payload=None, method=None, opener=None):
@@ -52,10 +58,26 @@ class AccountServerTests(unittest.TestCase):
         )
         client = opener or self.client
         try:
-            with client.open(request, timeout=5) as response:
+            with client.open(request, timeout=15) as response:
                 return response.status, response.headers, json.load(response)
         except HTTPError as error:
             return error.code, error.headers, json.load(error)
+
+    def request_raw(self, path, body, content_type, headers=None, opener=None):
+        request_headers = {"Content-Type": content_type}
+        request_headers.update(headers or {})
+        request = Request(
+            self.base_url + path,
+            data=body,
+            method="POST",
+            headers=request_headers,
+        )
+        client = opener or self.client
+        try:
+            with client.open(request, timeout=15) as response:
+                return response.status, response.headers, response.read()
+        except HTTPError as error:
+            return error.code, error.headers, error.read()
 
     def test_register_login_logout_and_password_storage(self):
         status, headers, registration = self.request_json(
@@ -136,11 +158,315 @@ class AccountServerTests(unittest.TestCase):
         }
         self.assertEqual(website_events, server.EVENT_DATES)
 
+    def test_event_price_catalog_matches_bookable_website_cards(self):
+        page = (server.ROOT / "index.html").read_text(encoding="utf-8")
+        website_prices = {
+            name: int(price.replace(",", ""))
+            for name, price in re.findall(
+                r'<article class="event-card"[^>]*data-event="([^"]+)"[\s\S]*?<span class="event-price"><b>¥([\d,]+)',
+                page,
+            )
+        }
+        self.assertEqual(website_prices, server.EVENT_PRICES)
+
     def test_every_event_has_menu_or_activity_details(self):
         page = (server.ROOT / "index.html").read_text(encoding="utf-8")
         event_count = len(re.findall(r'<article class="event-card"', page))
         details_button_count = len(re.findall(r'data-event-menu|data-tea-menu', page))
         self.assertEqual(details_button_count, event_count)
+
+    def test_new_year_pop_up_is_listed_for_calendar_date(self):
+        page = (server.ROOT / "index.html").read_text(encoding="utf-8")
+        event = re.search(
+            r'<article class="event-card" data-category="([^"]+)" data-date="([^"]+)" data-event="International New Year food gathering"',
+            page,
+        )
+        self.assertIsNotNone(event)
+        self.assertEqual(event.groups(), ("Pop-up event", "2027-01-01"))
+
+    def test_new_year_event_menu_has_country_stall_photos(self):
+        app = (server.ROOT / "app.js").read_text(encoding="utf-8")
+        for country in ("Nepal", "Sri Lanka", "Bangladesh", "India", "Japan"):
+            with self.subTest(country=country):
+                self.assertIn(f"name: \"{country} ·", app)
+
+    def test_checkout_form_uses_stripe_and_new_year_event_is_bookable(self):
+        page = (server.ROOT / "index.html").read_text(encoding="utf-8")
+        app = (server.ROOT / "app.js").read_text(encoding="utf-8")
+        self.assertIn("Continue to secure payment", page)
+        self.assertIn("securely with Stripe", page)
+        new_year_event = re.search(
+            r'<article class="event-card"[^>]*data-event="International New Year food gathering".*?</article>',
+            page,
+            flags=re.DOTALL,
+        )
+        self.assertIsNotNone(new_year_event)
+        self.assertIn('class="book-button"', new_year_event.group(0))
+        self.assertIn("<b>¥2,000</b> / person", new_year_event.group(0))
+        self.assertIn("purchased separately from each stall", new_year_event.group(0))
+        self.assertIn('"/api/checkout"', app)
+
+    def test_booking_buttons_are_clickable_and_require_login_before_booking(self):
+        app = (server.ROOT / "app.js").read_text(encoding="utf-8")
+        self.assertIn('button.textContent = translate("Book now")', app)
+        self.assertIn("if (!signedInUser)", app)
+        self.assertIn('document.getElementById("loginDialog").showModal()', app)
+        self.assertIn("pendingBookingCard = card", app)
+        self.assertIn("if (!checkoutEnabled)", app)
+        self.assertIn("showBookingDialog(card)", app)
+        self.assertNotIn("Bookings opening soon", app)
+
+    def test_checkout_form_validates_before_starting_payment(self):
+        page = (server.ROOT / "index.html").read_text(encoding="utf-8")
+        app = (server.ROOT / "app.js").read_text(encoding="utf-8")
+        self.assertIn('id="bookingForm" novalidate', page)
+        self.assertIn("form.reportValidity()", app)
+        self.assertIn("Opening secure Stripe checkout", app)
+        self.assertIn("checkout.stripe.com", app)
+
+    def test_login_password_fields_have_accessible_visibility_toggles(self):
+        page = (server.ROOT / "index.html").read_text(encoding="utf-8")
+        app = (server.ROOT / "app.js").read_text(encoding="utf-8")
+        for password_id in ("loginPassword", "confirmPassword"):
+            with self.subTest(password_id=password_id):
+                self.assertRegex(
+                    page,
+                    rf'<button class="password-toggle"[^>]*aria-controls="{password_id}"[^>]*data-password-toggle>',
+                )
+        self.assertIn('password.type = isVisible ? "text" : "password"', app)
+        self.assertIn('button.setAttribute("aria-pressed", String(isVisible))', app)
+        self.assertIn('translate(isVisible ? "Hide password" : "Show password")', app)
+
+    def test_checkout_is_disabled_until_stripe_and_schedule_are_configured(self):
+        with patch.dict(
+            "os.environ",
+            {
+                "TABLEMATES_BOOKINGS_ENABLED": "0",
+                "STRIPE_SECRET_KEY": "",
+                "STRIPE_WEBHOOK_SECRET": "",
+                "TABLEMATES_BASE_URL": "",
+            },
+        ):
+            status, _, response = self.request_json("/api/checkout/status")
+            self.assertEqual(status, 200)
+            self.assertFalse(response["enabled"])
+
+            status, _, response = self.request_json(
+                "/api/checkout",
+                {
+                    "event": "Around the world, one dinner table",
+                    "name": "Jamie",
+                    "email": "jamie@example.com",
+                    "guests": 2,
+                    "language": "English",
+                },
+                method="POST",
+            )
+        self.assertEqual(status, 503)
+        self.assertIn("not ready", response["error"])
+
+    def test_stripe_checkout_uses_server_price_and_webhook_confirms_booking(self):
+        environment = {
+            "TABLEMATES_BOOKINGS_ENABLED": "1",
+            "STRIPE_SECRET_KEY": "sk_test_example",
+            "STRIPE_WEBHOOK_SECRET": "whsec_example",
+            "TABLEMATES_BASE_URL": "https://tablemates.example",
+        }
+        with (
+            patch.dict("os.environ", environment),
+            patch.object(server, "japan_today", return_value=date(2026, 1, 1)),
+            patch.object(
+                server,
+                "stripe_api_request",
+                return_value={
+                    "id": "cs_test_example",
+                    "url": "https://checkout.stripe.com/c/pay/cs_test_example",
+                },
+            ) as stripe_request,
+        ):
+            status, _, response = self.request_json(
+                "/api/checkout",
+                {
+                    "event": "Around the world, one dinner table",
+                    "name": "Jamie Example",
+                    "email": "Jamie@example.com",
+                    "guests": 2,
+                    "language": "English",
+                },
+                method="POST",
+            )
+            self.assertEqual(status, 201)
+            self.assertEqual(response["checkout_url"], "https://checkout.stripe.com/c/pay/cs_test_example")
+            checkout_data = stripe_request.call_args.args[2]
+            self.assertEqual(checkout_data["line_items[0][price_data][unit_amount]"], "2800")
+            self.assertEqual(checkout_data["line_items[0][quantity]"], "2")
+            self.assertEqual(checkout_data["customer_email"], "jamie@example.com")
+
+            connection = sqlite3.connect(self.database)
+            try:
+                booking = connection.execute(
+                    "SELECT id, total_jpy, status FROM bookings WHERE stripe_session_id = ?",
+                    ("cs_test_example",),
+                ).fetchone()
+            finally:
+                connection.close()
+            self.assertEqual(booking[1:], (5600, "pending_payment"))
+
+            webhook_event = {
+                "id": "evt_test_example",
+                "type": "checkout.session.completed",
+                "data": {
+                    "object": {
+                        "id": "cs_test_example",
+                        "mode": "payment",
+                        "payment_status": "paid",
+                        "currency": "jpy",
+                        "amount_total": 5600,
+                        "metadata": {"booking_id": booking[0]},
+                    }
+                },
+            }
+            body = json.dumps(webhook_event, separators=(",", ":")).encode("utf-8")
+            timestamp = str(int(server.time.time()))
+            signature = hmac.new(
+                b"whsec_example",
+                f"{timestamp}.{body.decode('utf-8')}".encode("utf-8"),
+                hashlib.sha256,
+            ).hexdigest()
+            status, _, response = self.request_raw(
+                "/api/stripe/webhook",
+                body,
+                "application/json",
+                {"Stripe-Signature": f"t={timestamp},v1={signature}"},
+            )
+            self.assertEqual(status, 200)
+            self.assertTrue(json.loads(response)["received"])
+            status, _, response = self.request_raw(
+                "/api/stripe/webhook",
+                body,
+                "application/json",
+                {"Stripe-Signature": f"t={timestamp},v1={signature}"},
+            )
+            self.assertEqual(status, 200)
+
+            connection = sqlite3.connect(self.database)
+            try:
+                payment_status = connection.execute(
+                    "SELECT status FROM bookings WHERE id = ?",
+                    (booking[0],),
+                ).fetchone()[0]
+            finally:
+                connection.close()
+            self.assertEqual(payment_status, "paid")
+
+    def test_stripe_checkout_does_not_sell_more_than_eight_seats(self):
+        environment = {
+            "TABLEMATES_BOOKINGS_ENABLED": "1",
+            "STRIPE_SECRET_KEY": "sk_test_example",
+            "STRIPE_WEBHOOK_SECRET": "whsec_example",
+            "TABLEMATES_BASE_URL": "https://tablemates.example",
+        }
+        checkout_responses = [
+            {"id": "cs_test_first", "url": "https://checkout.stripe.com/c/pay/cs_test_first"},
+            {"id": "cs_test_second", "url": "https://checkout.stripe.com/c/pay/cs_test_second"},
+        ]
+        with (
+            patch.dict("os.environ", environment),
+            patch.object(server, "japan_today", return_value=date(2026, 1, 1)),
+            patch.object(server, "stripe_api_request", side_effect=checkout_responses) as stripe_request,
+        ):
+            for guests in (4, 4):
+                status, _, _ = self.request_json(
+                    "/api/checkout",
+                    {
+                        "event": "Around the world, one dinner table",
+                        "name": "Jamie",
+                        "email": "jamie@example.com",
+                        "guests": guests,
+                        "language": "English",
+                    },
+                    method="POST",
+                )
+                self.assertEqual(status, 201)
+            status, _, response = self.request_json(
+                "/api/checkout",
+                {
+                    "event": "Around the world, one dinner table",
+                    "name": "Jamie",
+                    "email": "jamie@example.com",
+                    "guests": 1,
+                    "language": "English",
+                },
+                method="POST",
+            )
+        self.assertEqual(status, 400)
+        self.assertIn("enough seats", response["error"])
+        self.assertEqual(stripe_request.call_count, 2)
+
+    def test_community_media_is_public_after_signed_in_upload(self):
+        boundary = "tablemates-test-boundary"
+        image_bytes = b"\xff\xd8\xff" + b"test-image-bytes"
+        body = (
+            f"--{boundary}\r\n"
+            'Content-Disposition: form-data; name="caption"\r\n\r\n'
+            "A shared table in Osaka.\r\n"
+            f"--{boundary}\r\n"
+            'Content-Disposition: form-data; name="media"; filename="meal.jpg"\r\n'
+            "Content-Type: image/jpeg\r\n\r\n"
+        ).encode("utf-8") + image_bytes + f"\r\n--{boundary}--\r\n".encode("utf-8")
+
+        status, _, response = self.request_raw(
+            "/api/community",
+            body,
+            f"multipart/form-data; boundary={boundary}",
+        )
+        self.assertEqual(status, 401)
+        self.assertIn("Log in", json.loads(response)["error"])
+
+        self.request_json(
+            "/api/register",
+            {"name": "Jamie", "email": "community@example.com", "password": "A-private-demo-password"},
+        )
+        status, _, response = self.request_raw(
+            "/api/community",
+            body,
+            f"multipart/form-data; boundary={boundary}",
+        )
+        self.assertEqual(status, 201)
+        post = json.loads(response)["post"]
+        self.assertEqual(post["name"], "Jamie")
+
+        status, _, feed = self.request_json("/api/community")
+        self.assertEqual(status, 200)
+        self.assertEqual(feed["posts"][0]["caption"], "A shared table in Osaka.")
+        self.assertTrue(feed["posts"][0]["media_url"].startswith("/media/"))
+        with self.client.open(self.base_url + feed["posts"][0]["media_url"], timeout=5) as media:
+            self.assertEqual(media.headers.get_content_type(), "image/jpeg")
+            self.assertEqual(media.read(), image_bytes)
+
+    def test_community_media_rejects_mismatched_file_signatures(self):
+        boundary = "tablemates-test-boundary"
+        body = (
+            f"--{boundary}\r\n"
+            'Content-Disposition: form-data; name="caption"\r\n\r\n'
+            "Not really a photo.\r\n"
+            f"--{boundary}\r\n"
+            'Content-Disposition: form-data; name="media"; filename="meal.jpg"\r\n'
+            "Content-Type: image/jpeg\r\n\r\n"
+            "not-a-jpeg\r\n"
+            f"--{boundary}--\r\n"
+        ).encode("utf-8")
+        self.request_json(
+            "/api/register",
+            {"name": "Jamie", "email": "signature@example.com", "password": "A-private-demo-password"},
+        )
+        status, _, response = self.request_raw(
+            "/api/community",
+            body,
+            f"multipart/form-data; boundary={boundary}",
+        )
+        self.assertEqual(status, 400)
+        self.assertIn("JPEG", json.loads(response)["error"])
 
     def test_website_assets_are_served(self):
         for path, content_type in (
@@ -168,7 +494,7 @@ class AccountServerTests(unittest.TestCase):
         self.assertEqual(raised.exception.code, 403)
 
     def test_event_comments_persist_and_are_listed_for_the_event(self):
-        with patch.object(server, "japan_today", return_value=date(2026, 10, 25)):
+        with patch.object(server, "japan_today", return_value=date(2027, 10, 25)):
             status, _, response = self.request_json(
                 "/api/comments",
                 {
@@ -202,13 +528,13 @@ class AccountServerTests(unittest.TestCase):
             "rating": 5,
             "comment": "Looking forward to it.",
         }
-        with patch.object(server, "japan_today", return_value=date(2026, 11, 5)):
+        with patch.object(server, "japan_today", return_value=date(2027, 11, 5)):
             status, _, response = self.request_json("/api/comments", payload, method="POST")
         self.assertEqual(status, 400)
         self.assertIn("after the event date", response["error"])
 
         payload["event"] = "An event that does not exist"
-        with patch.object(server, "japan_today", return_value=date(2026, 11, 5)):
+        with patch.object(server, "japan_today", return_value=date(2027, 11, 5)):
             status, _, response = self.request_json("/api/comments", payload, method="POST")
         self.assertEqual(status, 400)
         self.assertIn("valid event", response["error"])
@@ -220,14 +546,14 @@ class AccountServerTests(unittest.TestCase):
             "rating": 6,
             "comment": "Not a valid rating.",
         }
-        with patch.object(server, "japan_today", return_value=date(2026, 10, 25)):
+        with patch.object(server, "japan_today", return_value=date(2027, 10, 25)):
             status, _, response = self.request_json("/api/comments", payload, method="POST")
         self.assertEqual(status, 400)
         self.assertIn("rating", response["error"])
 
         payload["rating"] = 5
         payload["comment"] = " " * 501
-        with patch.object(server, "japan_today", return_value=date(2026, 10, 25)):
+        with patch.object(server, "japan_today", return_value=date(2027, 10, 25)):
             status, _, response = self.request_json("/api/comments", payload, method="POST")
         self.assertEqual(status, 400)
         self.assertIn("500 characters", response["error"])
