@@ -95,6 +95,10 @@
     .event-menu-list li { display: grid; grid-template-columns: 92px minmax(0, 1fr); align-items: center; gap: 12px; min-height: 92px; padding: 9px; border: 1px solid var(--line); border-radius: 5px; background: white; color: var(--ink); font-size: 11px; line-height: 1.6; }
     .menu-item-photo { display: block; width: 92px; height: 72px; border-radius: 4px; background: #d6c8b3; object-fit: cover; }
     .tea-menu-intro { margin: 0 0 17px; color: var(--muted); font-size: 11px; line-height: 1.8; }
+    .event-guide { margin: 0 0 13px; padding: 12px 14px; border-left: 2px solid var(--green); background: #f5f4ef; }
+    .event-guide h3 { margin: 0 0 5px; color: var(--green); font-size: 11px; }
+    .event-guide p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.8; }
+    .modal-body > h3[data-i18n="eventMenuLabel"] { margin: 16px 0 10px; color: var(--green); font-size: 14px; }
     .tea-menu-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
     .tea-country { padding: 15px; border: 1px solid var(--line); border-radius: 5px; background: white; }
     .tea-country h3 { margin: 0 0 10px; color: var(--green); font-family: var(--serif); font-size: 17px; font-weight: 500; }

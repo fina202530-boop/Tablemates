@@ -495,19 +495,51 @@ class AccountServerTests(unittest.TestCase):
             re.DOTALL,
         )
         match = re.search(
-            r"const additionalTranslationRows = \[(.*?)\n    \];\n    const supportedLanguages",
+            r"const additionalTranslationRows = \[(.*?)\n    \];\n    const eventTranslationRows",
+            app,
+            re.DOTALL,
+        )
+        event_match = re.search(
+            r"const eventTranslationRows = \[(.*?)\n    \];\n    const supportedLanguages",
             app,
             re.DOTALL,
         )
         self.assertIsNotNone(base_match)
         self.assertIsNotNone(match)
+        self.assertIsNotNone(event_match)
         base_rows = json.loads(re.sub(r",\s*]", "]", f"[{base_match.group(1)}]"))
         rows = json.loads(re.sub(r",\s*]", "]", f"[{match.group(1)}]"))
+        event_rows = json.loads(re.sub(r",\s*]", "]", f"[{event_match.group(1)}]"))
         self.assertTrue(rows)
         self.assertTrue(all(len(row) == 5 and all(row) for row in rows))
         missing_keys = {row[0] for row in base_rows if len(row) < 6}
         self.assertEqual(missing_keys, {row[0] for row in rows})
+        self.assertTrue(event_rows)
+        self.assertTrue(all(len(row) == 6 and all(row) for row in event_rows))
         self.assertIn("additionalTranslationRows.map((row) => [row[0], row[index - 1]])", app)
+        event_translations = {row[0] for row in event_rows}
+        menu_section = re.search(
+            r"const eventMenus = \{(.*?)\n    \};\n    const eventGuides",
+            app,
+            re.DOTALL,
+        )
+        guide_section = re.search(
+            r"const eventGuides = \{(.*?)\n    \};\n    let activeEventMenuCard",
+            app,
+            re.DOTALL,
+        )
+        self.assertIsNotNone(menu_section)
+        self.assertIsNotNone(guide_section)
+        menu_copy = re.findall(r'^\s*(?:intro|name|alt):\s*"([^"]+)"', menu_section.group(1), re.MULTILINE)
+        guide_copy = re.findall(r'^\s*(?:purpose|format):\s*"([^"]+)"', guide_section.group(1), re.MULTILINE)
+        self.assertTrue(menu_copy)
+        self.assertTrue(guide_copy)
+        self.assertEqual(event_translations.intersection(menu_copy), set(menu_copy))
+        self.assertEqual(event_translations.intersection(guide_copy), set(guide_copy))
+        self.assertIn("translate(menu.intro)", app)
+        self.assertIn("itemName.textContent = translate(name)", app)
+        self.assertIn("image.alt = translate(", app)
+        self.assertIn("if (document.getElementById(\"eventMenuDialog\").open) renderActiveEventMenu()", app)
 
     def test_rejects_cross_origin_account_requests(self):
         request = Request(
