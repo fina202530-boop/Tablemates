@@ -480,6 +480,35 @@ class AccountServerTests(unittest.TestCase):
                     self.assertEqual(response.headers.get_content_charset(), "utf-8")
                     self.assertTrue(response.read())
 
+    def test_japanese_is_default_and_all_added_copy_has_complete_translations(self):
+        page = (server.ROOT / "index.html").read_text(encoding="utf-8")
+        app = (server.ROOT / "app.js").read_text(encoding="utf-8")
+        self.assertIn('<html lang="ja">', page)
+        self.assertIn('<option value="ja" selected>', page)
+        for language in ("en", "ja", "bn", "ne", "si", "fr"):
+            self.assertIn(f'<option value="{language}"', page)
+        self.assertIn("document.documentElement.lang = languageLocales[language] || language", app)
+
+        base_match = re.search(
+            r"const translationRows = \[(.*?)\n    \];\n    const additionalTranslationRows",
+            app,
+            re.DOTALL,
+        )
+        match = re.search(
+            r"const additionalTranslationRows = \[(.*?)\n    \];\n    const supportedLanguages",
+            app,
+            re.DOTALL,
+        )
+        self.assertIsNotNone(base_match)
+        self.assertIsNotNone(match)
+        base_rows = json.loads(re.sub(r",\s*]", "]", f"[{base_match.group(1)}]"))
+        rows = json.loads(re.sub(r",\s*]", "]", f"[{match.group(1)}]"))
+        self.assertTrue(rows)
+        self.assertTrue(all(len(row) == 5 and all(row) for row in rows))
+        missing_keys = {row[0] for row in base_rows if len(row) < 6}
+        self.assertEqual(missing_keys, {row[0] for row in rows})
+        self.assertIn("additionalTranslationRows.map((row) => [row[0], row[index - 1]])", app)
+
     def test_rejects_cross_origin_account_requests(self):
         request = Request(
             self.base_url + "/api/register",
