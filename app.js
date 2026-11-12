@@ -634,6 +634,7 @@ const translationRows = [
       ["out of 5 stars", "৫টির মধ্যে", "५ मध्ये", "තරු 5න්", "sur 5 étoiles"]
     ];
     const eventTranslationRows = [
+      ["Email us", "メールでお問い合わせ", "ইমেইল করুন", "हामीलाई इमेल गर्नुहोस्", "අපට ඊමේල් කරන්න", "Nous écrire"],
       ["Questions about an event or our community? Email us and we'll be happy to help.", "イベントやコミュニティについてのご質問は、メールでお気軽にお問い合わせください。", "কোনো অনুষ্ঠান বা আমাদের কমিউনিটি সম্পর্কে প্রশ্ন আছে? ইমেইল করুন, আমরা সাহায্য করতে পেরে আনন্দিত হব।", "कार्यक्रम वा हाम्रो समुदायबारे प्रश्न छ? हामीलाई इमेल गर्नुहोस्, सहयोग गर्न पाउँदा खुसी हुनेछौँ।", "අපගේ උත්සවයක් හෝ ප්‍රජාව ගැන ප්‍රශ්න තිබේද? අපට ඊමේල් කරන්න, අපි සතුටින් උදව් කරන්නම්.", "Une question sur un événement ou notre communauté ? Écrivez-nous, nous serons ravis de vous aider."],
       ["Purpose", "目的", "উদ্দেশ্য", "उद्देश्य", "අරමුණ", "Objectif"],
       ["What to expect", "当日の流れ", "কীভাবে হবে", "के अपेक्षा गर्ने", "අත්දැකීමේ විස්තර", "Déroulement"],
