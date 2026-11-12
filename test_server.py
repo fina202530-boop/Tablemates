@@ -175,6 +175,17 @@ class AccountServerTests(unittest.TestCase):
         details_button_count = len(re.findall(r'data-event-menu|data-tea-menu', page))
         self.assertEqual(details_button_count, event_count)
 
+    def test_homepage_has_contact_callout_before_experiences(self):
+        page = (server.ROOT / "index.html").read_text(encoding="utf-8")
+        contact = re.search(
+            r'<section class="home-contact-section" data-page-view="home">(.*?)</section>',
+            page,
+            re.DOTALL,
+        )
+        self.assertIsNotNone(contact)
+        self.assertIn('href="mailto:hello@tablemates.jp"', contact.group(1))
+        self.assertLess(page.index(contact.group(0)), page.index('id="experiences"'))
+
     def test_new_year_pop_up_is_listed_for_calendar_date(self):
         page = (server.ROOT / "index.html").read_text(encoding="utf-8")
         event = re.search(

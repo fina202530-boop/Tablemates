@@ -333,6 +333,10 @@
     .welcome-card h3, .value-card h3 { margin: 0 0 9px; font-family: var(--serif); font-size: 22px; font-weight: 500; }
     .welcome-card p, .value-card p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
     .welcome-link { display: flex; justify-content: center; margin-top: 29px; }
+    .home-contact-section { padding: 38px 32px; background: #fff; }
+    .home-contact-inner { display: flex; max-width: 1176px; margin: auto; align-items: center; justify-content: space-between; gap: 24px; padding: 25px 30px; border: 1px solid var(--line); border-radius: 7px; }
+    .home-contact-inner .eyebrow { margin-bottom: 9px; }
+    .home-contact-inner p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
     .events-section { background: #fff; }
     .filters { gap: 9px; margin-bottom: 29px; }
     .filter { padding: 10px 16px; border-radius: 30px; font-size: 11px; }
@@ -413,6 +417,8 @@
       .hero-copy > p { font-size: 13px; }
       .hero-visual { height: min(94vw, 430px); }
       .section { padding: 70px 20px; }
+      .home-contact-section { padding: 26px 20px; }
+      .home-contact-inner { align-items: flex-start; flex-direction: column; padding: 22px; }
       .welcome-grid, .values-grid { grid-template-columns: 1fr; gap: 11px; }
       .welcome-card, .value-card { padding: 19px; }
       .welcome-card > span, .value-card > span { margin-bottom: 8px; }
