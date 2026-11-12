@@ -635,7 +635,9 @@ const translationRows = [
     ];
     const eventTranslationRows = [
       ["Email us", "メールでお問い合わせ", "ইমেইল করুন", "हामीलाई इमेल गर्नुहोस्", "අපට ඊමේල් කරන්න", "Nous écrire"],
-      ["Questions about an event or our community? Email us and we'll be happy to help.", "イベントやコミュニティについてのご質問は、メールでお気軽にお問い合わせください。", "কোনো অনুষ্ঠান বা আমাদের কমিউনিটি সম্পর্কে প্রশ্ন আছে? ইমেইল করুন, আমরা সাহায্য করতে পেরে আনন্দিত হব।", "कार्यक्रम वा हाम्रो समुदायबारे प्रश्न छ? हामीलाई इमेल गर्नुहोस्, सहयोग गर्न पाउँदा खुसी हुनेछौँ।", "අපගේ උත්සවයක් හෝ ප්‍රජාව ගැන ප්‍රශ්න තිබේද? අපට ඊමේල් කරන්න, අපි සතුටින් උදව් කරන්නම්.", "Une question sur un événement ou notre communauté ? Écrivez-nous, nous serons ravis de vous aider."],
+      ["Call us", "お電話ください", "ফোন করুন", "हामीलाई फोन गर्नुहोस्", "අපට අමතන්න", "Appelez-nous"],
+      ["Email example", "メールアドレス例", "নমুনা ইমেইল", "उदाहरण इमेल", "උදාහරණ ඊමේල් ලිපිනය", "Exemple d’e-mail"],
+      ["Questions about an event or our community? Call us or use the example email below.", "イベントやコミュニティについてのご質問は、お電話いただくか、下記のメールアドレス例をご利用ください。", "কোনো অনুষ্ঠান বা আমাদের কমিউনিটি সম্পর্কে প্রশ্ন আছে? ফোন করুন অথবা নিচের নমুনা ইমেইলটি ব্যবহার করুন।", "कार्यक्रम वा हाम्रो समुदायबारे प्रश्न छ? फोन गर्नुहोस् वा तलको उदाहरण इमेल प्रयोग गर्नुहोस्।", "අපගේ උත්සවයක් හෝ ප්‍රජාව ගැන ප්‍රශ්න තිබේද? අපට අමතන්න හෝ පහත උදාහරණ ඊමේල් ලිපිනය භාවිතා කරන්න.", "Une question sur un événement ou notre communauté ? Appelez-nous ou utilisez l’adresse e-mail d’exemple ci-dessous."],
       ["Purpose", "目的", "উদ্দেশ্য", "उद्देश्य", "අරමුණ", "Objectif"],
       ["What to expect", "当日の流れ", "কীভাবে হবে", "के अपेक्षा गर्ने", "අත්දැකීමේ විස්තර", "Déroulement"],
       ["Sample menu or activity", "メニュー・アクティビティ例", "নমুনা মেনু বা কার্যক্রম", "नमुना मेनु वा गतिविधि", "නියැදි මෙනුව හෝ ක්‍රියාකාරකම", "Exemple de menu ou d’activité"],

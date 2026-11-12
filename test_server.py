@@ -184,11 +184,14 @@ class AccountServerTests(unittest.TestCase):
         )
         self.assertIsNotNone(contact)
         self.assertIn(">Contact us.</div>", contact.group(0))
-        self.assertIn(">Email us</a>", contact.group(0))
-        self.assertIn('href="mailto:hello@tablemates.jp"', contact.group(1))
+        self.assertIn('href="tel:982898774"', contact.group(1))
+        self.assertIn("982898774", contact.group(1))
+        self.assertIn("hello@example.com", contact.group(1))
+        self.assertIn(">Email example</span>", contact.group(1))
         self.assertLess(page.index(contact.group(0)), page.index('id="experiences"'))
         app = (server.ROOT / "app.js").read_text(encoding="utf-8")
-        self.assertIn('["Email us", "メールでお問い合わせ", "ইমেইল করুন", "हामीलाई इमेल गर्नुहोस्", "අපට ඊමේල් කරන්න", "Nous écrire"]', app)
+        for label in ("Call us", "Email example", "Questions about an event or our community? Call us or use the example email below."):
+            self.assertIn(f'["{label}"', app)
 
     def test_new_year_pop_up_is_listed_for_calendar_date(self):
         page = (server.ROOT / "index.html").read_text(encoding="utf-8")

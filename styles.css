@@ -337,6 +337,8 @@
     .home-contact-inner { display: flex; max-width: 1176px; margin: auto; align-items: center; justify-content: space-between; gap: 24px; padding: 25px 30px; border: 1px solid var(--line); border-radius: 7px; }
     .home-contact-inner .eyebrow { margin-bottom: 9px; }
     .home-contact-inner p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+    .home-contact-methods { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+    .home-contact-methods p { font-size: 12px; }
     .events-section { background: #fff; }
     .filters { gap: 9px; margin-bottom: 29px; }
     .filter { padding: 10px 16px; border-radius: 30px; font-size: 11px; }
